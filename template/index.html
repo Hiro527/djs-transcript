@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>SERVER - #CHANNEL</title>
+        <style>
+            body {
+                background-color: #2C2F33;
+                color: #FFFFFF;
+                padding-top: 80px;
+            }
+            header {
+                left: 0px;
+                top: 0px;
+                height: 80px;
+                display: flex;
+                position: fixed;
+                align-items: center;
+                width: 100%;
+                background-color: #23272A;
+            }
+            #serverIcon {
+                height: 60px;
+                border-radius: 50%;
+                margin: 10px;
+            }
+            #headerTimestamp {
+                margin-left: 15px;
+                color: rgba(255, 255, 255, 0.4);
+            }
+            .message {
+                display: flex;
+                align-items: flex-start;
+                margin: 5px;
+                margin-bottom: 20px;
+                width: 100%;
+                height: auto;
+            }
+            .avatar {
+                height: 40px;
+                border-radius: 50%;
+                animation-play-state: paused;
+            }
+            .content {
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            .msgTimestamp {
+                color: rgba(255, 255, 255, 0.4);
+                font-size: 13px;
+            }
+            .attachmentImage {
+                width: max(30%, 300px);
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+            .attachmentFile {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                width: 500px;
+                height: 50px;
+                border-radius: 5px;
+                background-color: #23272A;
+                border: rgba(0, 0, 0, 0.4) solid 1px;
+            }
+            .attachmentFile .fileName {
+                margin-left: 10px;
+            }
+            .attachmentFile .fileSize {
+                margin-left: 10px;
+                color: rgba(255, 255, 255, 0.4);
+                font-size: 13px;
+            }
+            .attachmentFile .downloadBtn {
+                margin-left: auto;
+                margin-right: 10px;
+            }
+            .attachmentFile a {
+                color: rgba(255, 255, 255, 0.4);
+            }
+            .attachmentFile a:hover {
+                color: rgb(255, 255, 255);
+            }
+            .embed {
+                margin-top: 10px;
+                background-color: #23272A;
+                width: 600px;
+                font-size: 12px;
+                border-left: #00FF00 solid 4px;
+                border-radius: 4px;
+            }
+            .embedContent {
+                display: flex;
+                margin: 20px;
+            }
+            .embedAuthor {
+                display: flex;
+                align-items: center;
+            }
+            .embedAuthorAvatar {
+                width: 25px;
+                border-radius: 50%;
+            }
+            .embedAuthorName {
+                font-size: 14px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+            .embedTitle {
+                margin-top: 10px;
+                color: #00b0f4;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .embedDesc {
+                margin-top: 10px;
+            }
+            .embedRegField {
+                margin-top: 10px;
+            }
+            .embedFieldTitle {
+                color: rgba(255, 255, 255, 0.6);
+            }
+            .embedInlineFieldHolder {
+                margin-top: 10px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .embedInlineField {
+                width: 150px
+            }
+            .embedImage {
+                max-width: 450px;
+                margin-top: 10px;
+            }
+            .embedFooter {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+            }
+            .embedFooterImage {
+                width: 15px;
+                border-radius: 50%;
+            }
+            .embedFooterText {
+                margin-left: 7px;
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 10px;
+            }
+            .embedThumbnail {
+                width: 100px;
+                height: 100px;
+            }
+            .spoiler {
+                background-color: #5f5f5f;
+            }
+            .strike {
+                text-decoration: line-through;
+            }
+            .bold {
+                font-weight: bold;
+            }
+            .highlight {
+                background-color: rgba(79, 110, 223, 0.4);
+                padding-left: 3px;
+                padding-right: 3px;
+                border-radius: 2px;
+            }
+            .codeB {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding: 7px;
+                background-color: #23272A;
+                border-radius: 5px;
+                width: 600px;
+                font-family: monospace;
+            }
+            .codeL {
+                background-color: #23272A;
+                padding: 5px;
+                border-radius: 5px;
+                font-family: monospace;
+            }
+            .noDeco {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <img id="serverIcon" src="https://cdn.discordapp.com/attachments/755324960763019264/899847772738555924/1024.png">
+            <h1>SERVER - #CHANNEL</h1>
+            <div id="headerTimestamp">TIMESTAMP</div>
+        </header>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
+            <div class="content">
+                <div class="info">
+                    nullA1m#7777 <span class="msgTimestamp">2022/03/23 00:00 (Edited at 2022/03/23 00:01)</span>
+                </div>
+                <div>
+                    メッセージだよ
+                </div>
+            </div>
+        </div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
+            <div class="content">
+                <div class="info">
+                    nullA1m#7777 <span class="msgTimestamp">2022/03/23 00:00 (Edited at 2022/03/23 00:01)</span>
+                </div>
+                <div class="messageContent">
+                    メッセージ<br>
+                    <span class="highlight">@nullA1m</span><br>
+                    <span class="bold">太字</span> <span class="strike">打ち消し線</span> <span class="spoiler">ネタバレ</span><br>
+                    <div class="codeB">
+                        const foo = 'bar';<br>
+                    </div>
+                    <span class="codeL">
+                        inline code
+                    </span>
+                </div>
+                <img class="attachmentImage" src="https://cdn.discordapp.com/attachments/698690249571958838/955472524085448744/unknown.png">
+                <div class="attachmentFile">
+                    <div class="fileName">unknown.png</div>
+                    <div class="fileSize">4.2MB</div>
+                    <div class="downloadBtn noDeco"><a href="https://cdn.discordapp.com/attachments/698690249571958838/955472524085448744/unknown.png" target="_blank" rel="noopener noreferrer">Download</a></div>
+                </div>
+                <div class="embed">
+                    <div class="embedContent">
+                        <div class="embedContentMain">
+                            <div class="embedAuthor">
+                                <img class="embedAuthorAvatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
+                                <div class="embedAuthorName">Author</div>
+                            </div>
+                            <div class="embedTitle">
+                                Embed Title
+                            </div>
+                            <div class="embedDesc">
+                                Description
+                            </div>
+                            <div class="embedRegField">
+                                <div class="embedFieldTitle">
+                                    Regular Field
+                                </div>
+                                <div class="embedFieldValue">
+                                    Field Value
+                                </div>
+                            </div>
+                            <div class="embedInlineFieldHolder">
+                                <div class="embedInlineField">
+                                    <div class="embedFieldTitle">
+                                        Inline Field
+                                    </div>
+                                    <div class="embedFieldValue">
+                                        Field Value
+                                    </div>
+                                </div>
+                                <div class="embedInlineField">
+                                    <div class="embedFieldTitle">
+                                        Inline Field
+                                    </div>
+                                    <div class="embedFieldValue">
+                                        Field Value
+                                    </div>
+                                </div>
+                                <div class="embedInlineField">
+                                    <div class="embedFieldTitle">
+                                        Inline Field
+                                    </div>
+                                    <div class="embedFieldValue">
+                                        Field Value
+                                    </div>
+                                </div>
+                            </div>
+                            <img class="embedImage" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
+                            <div class="embedFooter">
+                                <img class="embedFooterImage" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
+                                <div class="embedFooterText">Footer Text<span style="color: rgba(255, 255, 255, 0.4);"> • </span>2022/03/23</div>
+                            </div>
+                        </div>
+                        <img class="embedThumbnail" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
