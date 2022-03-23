@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+export const Base = `<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>SERVER - #CHANNEL</title>
+        <title>%SERVER% - %CHANNEL_NAME%</title>
         <style>
             body {
                 background-color: #2C2F33;
@@ -191,101 +191,79 @@
     </head>
     <body>
         <header>
-            <img id="serverIcon" src="https://cdn.discordapp.com/attachments/755324960763019264/899847772738555924/1024.png">
-            <h1>SERVER - #CHANNEL</h1>
-            <div id="headerTimestamp">TIMESTAMP</div>
+            <img id="serverIcon" src="%SERVER_ICON%">
+            <h1>%SERVER% - %CHANNEL_NAME%</h1>
+            <div id="headerTimestamp">%TRANSCRIPT_TIMESTAMP%</div>
         </header>
-        <div class="message">
-            <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-            <div class="content">
-                <div class="info">
-                    nullA1m#7777 <span class="msgTimestamp">2022/03/23 00:00 (Edited at 2022/03/23 00:01)</span>
-                </div>
-                <div class="messageContent">
-                    メッセージだよ
-                </div>
-            </div>
-        </div>
-        <div class="message">
-            <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-            <div class="content">
-                <div class="info">
-                    nullA1m#7777 <span class="msgTimestamp">2022/03/23 00:00 (Edited at 2022/03/23 00:01)</span>
-                </div>
-                <div class="messageContent">
-                    メッセージ<br>
-                    <span class="highlight">@nullA1m</span><br>
-                    <span class="bold">太字</span> <span class="strike">打ち消し線</span> <span class="spoiler">ネタバレ</span><br>
-                    <div class="codeB">
-                        const foo = 'bar';<br>
-                    </div>
-                    <span class="codeL">
-                        inline code
-                    </span>
-                </div>
-                <div class="embed">
-                    <div class="embedContent">
-                        <div class="embedContentMain">
-                            <div class="embedAuthor">
-                                <img class="embedAuthorAvatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                                <div class="embedAuthorName">Author</div>
-                            </div>
-                            <div class="embedTitle">
-                                Embed Title
-                            </div>
-                            <div class="embedDesc">
-                                Description
-                            </div>
-                            <div class="embedRegField">
-                                <div class="embedFieldTitle">
-                                    Regular Field
-                                </div>
-                                <div class="embedFieldValue">
-                                    Field Value
-                                </div>
-                            </div>
-                            <div class="embedInlineFieldHolder">
-                                <div class="embedInlineField">
-                                    <div class="embedFieldTitle">
-                                        Inline Field
-                                    </div>
-                                    <div class="embedFieldValue">
-                                        Field Value
-                                    </div>
-                                </div>
-                                <div class="embedInlineField">
-                                    <div class="embedFieldTitle">
-                                        Inline Field
-                                    </div>
-                                    <div class="embedFieldValue">
-                                        Field Value
-                                    </div>
-                                </div>
-                                <div class="embedInlineField">
-                                    <div class="embedFieldTitle">
-                                        Inline Field
-                                    </div>
-                                    <div class="embedFieldValue">
-                                        Field Value
-                                    </div>
-                                </div>
-                            </div>
-                            <img class="embedImage" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                            <div class="embedFooter">
-                                <img class="embedFooterImage" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                                <div class="embedFooterText">Footer Text<span style="color: rgba(255, 255, 255, 0.4);"> • </span>2022/03/23</div>
-                            </div>
-                        </div>
-                        <img class="embedThumbnail" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                    </div>
-                </div>
-                <img class="attachmentImage" src="https://cdn.discordapp.com/attachments/698690249571958838/955472524085448744/unknown.png">
-                <div class="attachmentFile">
-                    <div class="fileName">unknown.png</div>
-                    <div class="fileSize">4.2MB</div>
-                    <div class="downloadBtn"><a class="noDeco" href="https://cdn.discordapp.com/attachments/698690249571958838/955472524085448744/unknown.png" target="_blank" rel="noopener noreferrer">Download</a></div>
-                </div>
-            </div>
-        </div>
+        %CONTENTS%
     </body>
-</html>
+</html>`;
+export const Message = `<div class="message">
+    <img class="avatar" src="%MEMBER_AVATAR%">
+    <div class="content">
+        <div class="info">
+            %MEMBER_TAG% <span class="msgTimestamp">%MESSAGE_CREATED_TIMESTAMP% %MESSAGE_EDITED_TIMESTAMP%</span>
+        </div>
+        <div class="messageContent">
+            %MESSAGE_CONTENT%
+        </div>
+        %EMBEDS%
+        %IMAGES%
+        %FILES%
+    </div>
+</div>`;
+export const Image = `<img class="attachmentImage" src="%IMAGE_URL%">`;
+export const File = `<div class="attachmentFile">
+    <div class="fileName">%FILE_NAME%</div>
+    <div class="fileSize">%FILE_SIZE%</div>
+    <div class="downloadBtn"><a class="noDeco" href="%FILE_URL%" target="_blank" rel="noopener noreferrer">Download</a></div>
+</div>`;
+export const EmbedBase = `<div class="embed">
+    <div class="embedContent">
+        <div class="embedContentMain">
+            %EMBED_MAIN%
+        </div>
+        %EMBED_THUMBNAIL%
+    </div>
+</div>
+`;
+export const EmbedAuthor = `<div class="embedAuthor">
+    <img class="embedAuthorAvatar" src="%EMBED_AUTHOR_AVATAR_URL%">
+    <div class="embedAuthorName">%EMBED_AUTHOR_NAME%</div>
+</div>
+`;
+export const EmbedTitle = `<div class="embedTitle">
+    %EMBED_TITLE%
+</div>`;
+export const EmbedDesc = `<div class="embedDesc">
+    %EMBED_DESC%
+</div>
+`;
+export const EmbedRegularField = `<div class="embedRegField">
+    <div class="embedFieldTitle">
+        %EMBED_FIELD_TITLE%
+    </div>
+    <div class="embedFieldValue">
+        %EMBED_FIELD_VALUE%
+    </div>
+</div>`;
+export const EmbedInlineFieldBase = `<div class="embedInlineFieldHolder">
+    %EMBED_INLINE_FIELDS%
+</div>
+`;
+export const EmbedInlineField = `<div class="embedInlineField">
+    <div class="embedFieldTitle">
+        %EMBED_FIELD_TITLE%
+    </div>
+    <div class="embedFieldValue">
+        %EMBED_FIELD_VALUE%
+    </div>
+</div>
+`;
+export const EmbedImage = `<img class="embedImage" src="%EMBED_IMAGE_URL%">`;
+export const EmbedFooterTimestamp = `<span style="color: rgba(255, 255, 255, 0.4);"> • </span>%EMBED_FOOTER_TIMESTAMP%`;
+export const EmbedFooter = `<div class="embedFooter">
+    <img class="embedFooterImage" src="%EMBED_FOOTER_IMAGE_URL%">
+    <div class="embedFooterText">%EMBED_FOOTER_TEXT%%EMBED_FOOTER_TIMESTAMP%</div>
+</div>`;
+export const EmbedThumbnail = `<img class="embedThumbnail" src="%EMBED_THUMBNAIL_IMAGE_URL%">`;

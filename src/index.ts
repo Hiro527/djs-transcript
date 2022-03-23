@@ -1,6 +1,8 @@
 import { Channel, Client, Message, NewsChannel, TextChannel } from "discord.js";
 import { v4 } from "uuid";
 import * as path from "path";
+import * as fs from 'fs/promises';
+import { getHtml } from './lib/GenerateHTML';
 
 export const transcript = async (
     client: Client,
@@ -27,6 +29,7 @@ export const transcript = async (
         }
     };
     const messages = await recursive(channel.lastMessageId!, [channel.lastMessage!])
-    
+    const html = await getHtml(messages!);
+    await fs.writeFile(fname, html);
     return fname;
 };
