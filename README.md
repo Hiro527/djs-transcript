@@ -1,11 +1,13 @@
 # djs-transcript
+[![NPM](https://nodei.co/npm/djs-transcript.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/djs-transcript/)\
+[![CodeQL](https://github.com/Hiro527/djs-transcript/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Hiro527/djs-transcript/actions/workflows/codeql-analysis.yml)\
 Transcipt Generator for Discord.js
 # Usage
 ## JavaScript
 ```js
 const { transcript } = require('djs-transcript');
 /* Discord.js Client Initialization*/
-const filePath = await transcript(client, channel, 'Path-To-Write', 'ja');
+const filePath = await transcript(client, channel, 'Path-To-Write', 'Locale');
 // transcript() will return the path to file
 ```
 
@@ -13,9 +15,11 @@ const filePath = await transcript(client, channel, 'Path-To-Write', 'ja');
 ```ts
 import { transcript } from 'djs-transcript';
 /* Discord.js Client Initialization*/
-const filePath = await transcript(client, channel, 'Path-To-Write', 'ja');
+const filePath = await transcript(client, channel, 'Path-To-Write', 'Locale');
 // transcript() will return the path to file
 ```
+
+- Locale must be Unicode Locale Identifier.
 
 # WIP
 - Some markdown grammars are unsupported.
