@@ -21,10 +21,6 @@ const filePath = await transcript(client, channel, 'Path-To-Write', 'Locale');
 
 - Locale must be Unicode Locale Identifier.
 
-# WIP
-- Some markdown grammars are unsupported.
-- Code block
-
 # Contact
 Discord: nullA1m#7777\
 Twitter: [@nullA1m](https://twitter.com/nullA1m)
