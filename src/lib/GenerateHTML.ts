@@ -135,9 +135,9 @@ export const getHtml = async (
                 if (embed.timestamp) {
                     Footer = Footer.replace(
                         "%EMBED_FOOTER_TIMESTAMP%",
-                        new Date(embed.timestamp).toLocaleString(
+                        `<span style="color:rgba(255, 255, 255, 0.6)"> ･ </span>${new Date(embed.timestamp).toLocaleString(
                             locale || "en"
-                        ) || ""
+                        )}`
                     );
                 } else {
                     Footer = Footer.replace("%EMBED_FOOTER_TIMESTAMP%", "");
@@ -238,9 +238,8 @@ const generateContentHTML = (
         let startIndex = 3;
         if (str.match(/^```.+\n/)) {
             startIndex = str.match(/^```.+\n/)![0].length;
-        }
-        else if (str.match(/^```\n/)) {
-            startIndex = 4
+        } else if (str.match(/^```\n/)) {
+            startIndex = 4;
         }
         content = content.replace(
             str,
