@@ -1,7 +1,9 @@
 # djs-transcript
 [![NPM](https://nodei.co/npm/djs-transcript.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/djs-transcript/)\
 [![CodeQL](https://github.com/Hiro527/djs-transcript/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Hiro527/djs-transcript/actions/workflows/codeql-analysis.yml)\
-Transcipt Generator for Discord.js
+Transcipt Generator for Discord.js\
+
+Sample Page: https://hiro527.jp/djs-transcript/sample.html
 # Usage
 ## JavaScript
 ```js
