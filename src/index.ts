@@ -12,6 +12,7 @@ export const transcript = async (
 ) => {
     if (!(channel instanceof TextChannel || channel instanceof NewsChannel))
         return;
+    await channel.messages.fetch();
     if (!channel.lastMessage) {
         throw Error(`The channel you specified has no messages to transcript.`);
     }

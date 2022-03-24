@@ -167,13 +167,14 @@ export const Base = `<!DOCTYPE html>
             .highlight {
                 padding-left: 3px;
                 padding-right: 3px;
-                border-radius: 2px;
+                border-radius: 4px;
             }
             .codeB {
                 margin-top: 5px;
                 margin-bottom: 5px;
                 padding: 7px;
                 background-color: #23272A;
+                border: rgba(0, 0, 0, 0.4) solid 1px;
                 border-radius: 5px;
                 width: 600px;
                 font-family: monospace;
@@ -181,11 +182,22 @@ export const Base = `<!DOCTYPE html>
             .codeL {
                 background-color: #23272A;
                 padding: 5px;
-                border-radius: 5px;
+                border-radius: 3px;
                 font-family: monospace;
             }
             .noDeco {
                 text-decoration: none;
+            }
+            .quote {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding-top: 2px;
+                padding-bottom: 2px;
+                border-radius: 2.5px;
+                border-left: rgba(141, 141, 141, 0.5) solid 5px;
+            }
+            .quotedText {
+                margin-left: 10px;
             }
         </style>
     </head>

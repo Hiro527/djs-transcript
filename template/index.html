@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>SERVER - #CHANNEL</title>
+        <title>バックヤード - djs-transcript</title>
         <style>
             body {
                 background-color: #2C2F33;
@@ -174,6 +174,7 @@
                 margin-bottom: 5px;
                 padding: 7px;
                 background-color: #23272A;
+                border: rgba(0, 0, 0, 0.4) solid 1px;
                 border-radius: 5px;
                 width: 600px;
                 font-family: monospace;
@@ -181,111 +182,161 @@
             .codeL {
                 background-color: #23272A;
                 padding: 5px;
-                border-radius: 5px;
+                border-radius: 3px;
                 font-family: monospace;
             }
             .noDeco {
                 text-decoration: none;
             }
+            .quote {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding-top: 2px;
+                padding-bottom: 2px;
+                border-radius: 2.5px;
+                border-left: rgba(141, 141, 141, 0.5) solid 5px;
+            }
+            .quotedText {
+                margin-left: 10px;
+            }
         </style>
     </head>
     <body>
         <header>
-            <img id="serverIcon" src="https://cdn.discordapp.com/attachments/755324960763019264/899847772738555924/1024.png">
-            <h1>SERVER - #CHANNEL</h1>
-            <div id="headerTimestamp">TIMESTAMP</div>
+            <img id="serverIcon" src="https://cdn.discordapp.com/icons/698690249571958835/efe15eeca3fa041de093a4343b9af92a.webp">
+            <h1>バックヤード - djs-transcript</h1>
+            <div id="headerTimestamp">2022/3/24 22:01:39</div>
         </header>
         <div class="message">
-            <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-            <div class="content">
-                <div class="info">
-                    nullA1m#7777 <span class="msgTimestamp">2022/03/23 00:00 (Edited at 2022/03/23 00:01)</span>
-                </div>
-                <div class="messageContent">
-                    メッセージだよ
-                </div>
-            </div>
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:04:00 Edited at 2022/3/24 21:06:51</span>
         </div>
-        <div class="message">
-            <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-            <div class="content">
-                <div class="info">
-                    nullA1m#7777 <span class="msgTimestamp">2022/03/23 00:00 (Edited at 2022/03/23 00:01)</span>
-                </div>
-                <div class="messageContent">
-                    メッセージ<br>
-                    <span class="highlight">@nullA1m</span><br>
-                    <span class="bold">太字</span> <span class="strike">打ち消し線</span> <span class="spoiler">ネタバレ</span><br>
-                    <div class="codeB">
-                        const foo = 'bar';<br>
-                    </div>
-                    <span class="codeL">
-                        inline code
-                    </span>
-                </div>
-                <div class="embed">
-                    <div class="embedContent">
-                        <div class="embedContentMain">
-                            <div class="embedAuthor">
-                                <img class="embedAuthorAvatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                                <div class="embedAuthorName">Author</div>
-                            </div>
-                            <div class="embedTitle">
-                                Embed Title
-                            </div>
-                            <div class="embedDesc">
-                                Description
-                            </div>
-                            <div class="embedRegField">
-                                <div class="embedFieldTitle">
-                                    Regular Field
-                                </div>
-                                <div class="embedFieldValue">
-                                    Field Value
-                                </div>
-                            </div>
-                            <div class="embedInlineFieldHolder">
-                                <div class="embedInlineField">
-                                    <div class="embedFieldTitle">
-                                        Inline Field
-                                    </div>
-                                    <div class="embedFieldValue">
-                                        Field Value
-                                    </div>
-                                </div>
-                                <div class="embedInlineField">
-                                    <div class="embedFieldTitle">
-                                        Inline Field
-                                    </div>
-                                    <div class="embedFieldValue">
-                                        Field Value
-                                    </div>
-                                </div>
-                                <div class="embedInlineField">
-                                    <div class="embedFieldTitle">
-                                        Inline Field
-                                    </div>
-                                    <div class="embedFieldValue">
-                                        Field Value
-                                    </div>
-                                </div>
-                            </div>
-                            <img class="embedImage" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                            <div class="embedFooter">
-                                <img class="embedFooterImage" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                                <div class="embedFooterText">Footer Text<span style="color: rgba(255, 255, 255, 0.4);"> • </span>2022/03/23</div>
-                            </div>
-                        </div>
-                        <img class="embedThumbnail" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.gif">
-                    </div>
-                </div>
-                <img class="attachmentImage" src="https://cdn.discordapp.com/attachments/698690249571958838/955472524085448744/unknown.png">
-                <div class="attachmentFile">
-                    <div class="fileName">unknown.png</div>
-                    <div class="fileSize">4.2MB</div>
-                    <div class="downloadBtn"><a class="noDeco" href="https://cdn.discordapp.com/attachments/698690249571958838/955472524085448744/unknown.png" target="_blank" rel="noopener noreferrer">Download</a></div>
-                </div>
-            </div>
+        <div class="messageContent">
+            Standard Style
         </div>
+        
+        
+        
+    </div>
+</div><div class="message">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:06:27 Edited at 2022/3/24 21:18:02</span>
+        </div>
+        <div class="messageContent">
+            <span class="bold">Bold</span><br><span class="spoiler">Spoiler</span><br><span class="strike">Strikethrough</span><br>> QuotedText
+        </div>
+        
+        
+        
+    </div>
+</div><div class="message">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:06:35 Edited at 2022/3/24 21:59:21</span>
+        </div>
+        <div class="messageContent">
+            User Ping: <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@nullA1m</span> <br>Role Ping: <span class="highlight" style="background-color:rgba(233, 30, 99, 0.4)">@Sample Role 1</span> <span class="highlight" style="background-color:rgba(46, 204, 113, 0.4)">@Sample Role 2</span><br>Channel: <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">#djs-transcript</span> <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">🔊djs-transcript</span>
+        </div>
+        
+        
+        
+    </div>
+</div><div class="message">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:07:30 Edited at 2022/3/24 22:00:26</span>
+        </div>
+        <div class="messageContent">
+            <span class="codeL">Code Line</span><br><div class="codeB">Code Block<br>Code Block<br>Code Block<br></div>
+        </div>
+        
+        
+        
+    </div>
+</div><div class="message">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:07:51</span>
+        </div>
+        <div class="messageContent">
+            All Embeds are Supported<br>https://twitter.com/nullA1m
+        </div>
+        <div class="embed" style="border-left: #1da1f2 solid 4px;">
+    <div class="embedContent">
+        <div class="embedContentMain">
+            <div class="embedTitle">
+    ぬるえいむ (@nullA1m)
+</div><div class="embedDesc">
+    なんちゃって灰色プログラマー | @TIMPKrunker | 生放送 https://t.co/kITgKg4VjX | Discord https://t.co/I12lA3KJgX | 推し絵師さん @1kurusk @obktof | ♡ @Vspo77
+</div>
+<div class="embedInlineFieldHolder">
+    <div class="embedInlineField">
+    <div class="embedFieldTitle">
+        Followers
+    </div>
+    <div class="embedFieldValue">
+        781
+    </div>
+</div>
+<div class="embedInlineField">
+    <div class="embedFieldTitle">
+        Tweets
+    </div>
+    <div class="embedFieldValue">
+        24162
+    </div>
+</div>
+
+</div>
+<div class="embedFooter">
+    <img class="embedFooterImage" src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png">
+    <div class="embedFooterText">Twitter</div>
+</div>
+        </div>
+        <img class="embedThumbnail" src="https://pbs.twimg.com/profile_images/1500365908027777025/JVArly4Q_400x400.jpg">
+    </div>
+</div>
+
+        
+        
+    </div>
+</div><div class="message">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:08:30</span>
+        </div>
+        <div class="messageContent">
+            
+        </div>
+        
+        <img class="attachmentImage" src="https://cdn.discordapp.com/attachments/956522555383111700/956524912183500881/unknown.png">
+        
+    </div>
+</div><div class="message">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+    <div class="content">
+        <div class="info">
+            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:09:11</span>
+        </div>
+        <div class="messageContent">
+            
+        </div>
+        
+        
+        <div class="attachmentFile">
+    <div class="fileName">README.md</div>
+    <div class="fileSize">0MB</div>
+    <div class="downloadBtn"><a class="noDeco" href="https://cdn.discordapp.com/attachments/956522555383111700/956525084472909864/README.md" target="_blank" rel="noopener noreferrer">Download</a></div>
+</div>
+    </div>
+</div>
     </body>
 </html>

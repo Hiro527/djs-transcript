@@ -202,7 +202,7 @@ const generateContentHTML = (
     content.match(/<#[0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<span class="highlight">${
+            `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">${
                 guild.channels.cache.get(str.slice(2, -1))?.type ===
                 "GUILD_VOICE"
                     ? "🔊"
@@ -210,31 +210,44 @@ const generateContentHTML = (
             }${guild.channels.cache.get(str.slice(2, -1))?.name}</span>`
         );
     });
-    content.match(/\*\*(\w|\s|.)+\*\*/g)?.forEach((str) => {
+    content.match(/\*\*[\s\S]*\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="bold">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/\|\|(\w|\s|.)+\|\|/g)?.forEach((str) => {
+    content.match(/\|\|[\s\S]*\|\|/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="spoiler">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/~~(\w|\s|.)+~~/g)?.forEach((str) => {
+    content.match(/~~[\s\S]*~~/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="strike">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/```(\w|\s|.)+```/g)?.forEach((str) => {
+    content.match(/^> [\s\S]*/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<span class="codeB">${str.slice(3, -3)}</span>`
+            `<div class="quote"><div class="quotedText">${str.slice(1)}</div>/div>`
         );
     });
-    content.match(/`(\w|\s|.)+`/g)?.forEach((str) => {
+    content.match(/```[\s\S]*```/g)?.forEach((str) => {
+        let startIndex = 3;
+        if (str.match(/^```.+\n/)) {
+            startIndex = str.match(/^```.+\n/)![0].length;
+        }
+        else if (str.match(/^```\n/)) {
+            startIndex = 4
+        }
+        content = content.replace(
+            str,
+            `<div class="codeB">${str.slice(startIndex, -3)}</div>`
+        );
+    });
+    content.match(/`[\s\S]*`/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="codeL">${str.slice(1, -1)}</span>`
