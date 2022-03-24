@@ -190,7 +190,7 @@ const generateContentHTML = (
             }</span>`
         );
     });
-    content.match(/<@?[0-9]{17,19}>/g)?.forEach((str) => {
+    content.match(/<@[0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@${
