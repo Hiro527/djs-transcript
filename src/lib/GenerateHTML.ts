@@ -210,7 +210,7 @@ const generateContentHTML = (
             }${guild.channels.cache.get(str.slice(2, -1))?.name}</span>`
         );
     });
-    content.match(/\*\*\(\w|\s|.)+\*\*/g)?.forEach((str) => {
+    content.match(/\*\*(\w|\s|.)+\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="bold">${str.slice(2, -2)}</span>`
