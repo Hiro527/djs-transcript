@@ -93,6 +93,7 @@
     "include": [
         "src/*",
         "src/lib/*",
+        "src/index.d.ts",
         "src/@types/types.d.ts",
     ],
 }
