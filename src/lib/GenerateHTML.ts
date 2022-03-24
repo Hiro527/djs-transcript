@@ -182,11 +182,19 @@ const generateContentHTML = (
     content: string,
     embed?: Boolean
 ) => {
-    content.match(/<@(!)?[0-9]{17,19}>/g)?.forEach((str) => {
+    content.match(/<@!?[0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@${
                 guild.members.cache.get(str.slice(3, -1))?.displayName
+            }</span>`
+        );
+    });
+    content.match(/<@?[0-9]{17,19}>/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@${
+                guild.members.cache.get(str.slice(2, -1))?.displayName
             }</span>`
         );
     });
