@@ -92,6 +92,7 @@
     },
     "include": [
         "src/*",
+        "src/lib/*",
         "src/@types/types.d.ts",
     ],
 }

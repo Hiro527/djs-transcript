@@ -7,7 +7,8 @@ import { getHtml } from './lib/GenerateHTML';
 export const transcript = async (
     client: Client,
     channel: Channel,
-    fpath: string
+    fpath: string,
+    locale?: string
 ) => {
     if (!(channel instanceof TextChannel || channel instanceof NewsChannel)) return;
     if (!channel.lastMessage) {
@@ -29,7 +30,7 @@ export const transcript = async (
         }
     };
     const messages = await recursive(channel.lastMessageId!, [channel.lastMessage!])
-    const html = await getHtml(messages!);
+    const html = await getHtml(messages!, channel, channel.guild, locale);
     await fs.writeFile(fname, html);
     return fname;
 };

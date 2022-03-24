@@ -1,4 +1,7 @@
-export const Base = `<!DOCTYPE html>
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmbedThumbnail = exports.EmbedFooter = exports.EmbedFooterTimestamp = exports.EmbedImage = exports.EmbedInlineField = exports.EmbedInlineFieldBase = exports.EmbedRegularField = exports.EmbedDesc = exports.EmbedTitle = exports.EmbedAuthor = exports.EmbedBase = exports.File = exports.Image = exports.Message = exports.Base = void 0;
+exports.Base = `<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -198,7 +201,7 @@ export const Base = `<!DOCTYPE html>
         %CONTENTS%
     </body>
 </html>`;
-export const Message = `<div class="message">
+exports.Message = `<div class="message">
     <img class="avatar" src="%MEMBER_AVATAR%">
     <div class="content">
         <div class="info">
@@ -212,13 +215,13 @@ export const Message = `<div class="message">
         %FILES%
     </div>
 </div>`;
-export const Image = `<img class="attachmentImage" src="%IMAGE_URL%">`;
-export const File = `<div class="attachmentFile">
+exports.Image = `<img class="attachmentImage" src="%IMAGE_URL%">`;
+exports.File = `<div class="attachmentFile">
     <div class="fileName">%FILE_NAME%</div>
     <div class="fileSize">%FILE_SIZE%</div>
     <div class="downloadBtn"><a class="noDeco" href="%FILE_URL%" target="_blank" rel="noopener noreferrer">Download</a></div>
 </div>`;
-export const EmbedBase = `<div class="embed">
+exports.EmbedBase = `<div class="embed">
     <div class="embedContent">
         <div class="embedContentMain">
             %EMBED_MAIN%
@@ -227,19 +230,19 @@ export const EmbedBase = `<div class="embed">
     </div>
 </div>
 `;
-export const EmbedAuthor = `<div class="embedAuthor">
+exports.EmbedAuthor = `<div class="embedAuthor">
     <img class="embedAuthorAvatar" src="%EMBED_AUTHOR_AVATAR_URL%">
     <div class="embedAuthorName">%EMBED_AUTHOR_NAME%</div>
 </div>
 `;
-export const EmbedTitle = `<div class="embedTitle">
+exports.EmbedTitle = `<div class="embedTitle">
     %EMBED_TITLE%
 </div>`;
-export const EmbedDesc = `<div class="embedDesc">
+exports.EmbedDesc = `<div class="embedDesc">
     %EMBED_DESC%
 </div>
 `;
-export const EmbedRegularField = `<div class="embedRegField">
+exports.EmbedRegularField = `<div class="embedRegField">
     <div class="embedFieldTitle">
         %EMBED_FIELD_TITLE%
     </div>
@@ -247,11 +250,11 @@ export const EmbedRegularField = `<div class="embedRegField">
         %EMBED_FIELD_VALUE%
     </div>
 </div>`;
-export const EmbedInlineFieldBase = `<div class="embedInlineFieldHolder">
+exports.EmbedInlineFieldBase = `<div class="embedInlineFieldHolder">
     %EMBED_INLINE_FIELDS%
 </div>
 `;
-export const EmbedInlineField = `<div class="embedInlineField">
+exports.EmbedInlineField = `<div class="embedInlineField">
     <div class="embedFieldTitle">
         %EMBED_FIELD_TITLE%
     </div>
@@ -260,10 +263,10 @@ export const EmbedInlineField = `<div class="embedInlineField">
     </div>
 </div>
 `;
-export const EmbedImage = `<img class="embedImage" src="%EMBED_IMAGE_URL%">`;
-export const EmbedFooterTimestamp = `<span style="color: rgba(255, 255, 255, 0.4);"> • </span>%EMBED_FOOTER_TIMESTAMP%`;
-export const EmbedFooter = `<div class="embedFooter">
+exports.EmbedImage = `<img class="embedImage" src="%EMBED_IMAGE_URL%">`;
+exports.EmbedFooterTimestamp = `<span style="color: rgba(255, 255, 255, 0.4);"> • </span>%EMBED_FOOTER_TIMESTAMP%`;
+exports.EmbedFooter = `<div class="embedFooter">
     <img class="embedFooterImage" src="%EMBED_FOOTER_IMAGE_URL%">
     <div class="embedFooterText">%EMBED_FOOTER_TEXT%%EMBED_FOOTER_TIMESTAMP%</div>
 </div>`;
-export const EmbedThumbnail = `<img class="embedThumbnail" src="%EMBED_THUMBNAIL_IMAGE_URL%">`;
+exports.EmbedThumbnail = `<img class="embedThumbnail" src="%EMBED_THUMBNAIL_IMAGE_URL%">`;
