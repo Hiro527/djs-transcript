@@ -12,36 +12,34 @@ export const getHtml = async (
     guild: Guild,
     locale?: string
 ) => {
-    let BaseHTML = consts.Base;
-    // ベースHTMLの構築
-    BaseHTML.replace("%SERVER%", guild.name);
-    BaseHTML.replace("%CHANNEL_NAME%", channel.name);
-    BaseHTML.replace("%SERVER_ICON%", guild.iconURL()!);
-    BaseHTML.replace(
-        "%TRANSCRIPT_TIMESTAMP%",
-        new Date().toLocaleString(locale || "en")
-    );
+    await guild.members.fetch();
+    let BaseHTML = consts.Base.replaceAll("%SERVER%", guild.name)
+        .replaceAll("%CHANNEL_NAME%", channel.name)
+        .replaceAll("%SERVER_ICON%", guild.iconURL()!)
+        .replaceAll(
+            "%TRANSCRIPT_TIMESTAMP%",
+            new Date().toLocaleString(locale || "en")
+        );
     let ContentsHTML = "";
     messages.forEach((message) => {
-        let MessageHTML = consts.Message;
-        MessageHTML.replace(
+        let MessageHTML = consts.Message.replace(
             "%MEMBER_AVATAR%",
-            message.member?.displayAvatarURL()!
-        );
-        MessageHTML.replace("%MEMBER_TAG%", message.member?.user.tag!);
-        MessageHTML.replace(
-            "%MESSAGE_CREATED_TIMESTAMP%",
-            message.createdAt.toLocaleString(locale || "en")
-        );
+            message.member?.user.displayAvatarURL()!
+        )
+            .replace("%MEMBER_TAG%", message.member?.user.tag!)
+            .replace(
+                "%MESSAGE_CREATED_TIMESTAMP%",
+                message.createdAt.toLocaleString(locale || "en")
+            );
         if (message.editedAt) {
-            MessageHTML.replace(
+            MessageHTML = MessageHTML.replace(
                 "%MESSAGE_EDITED_TIMESTAMP%",
                 ` Edited at ${message.editedAt.toLocaleString(locale || "en")}`
             );
         } else {
-            MessageHTML.replace("%MESSAGE_EDITED_TIMESTAMP%", "");
+            MessageHTML = MessageHTML.replace("%MESSAGE_EDITED_TIMESTAMP%", "");
         }
-        MessageHTML.replace(
+        MessageHTML = MessageHTML.replace(
             "%MESSAGE_CONTENT%",
             generateContentHTML(guild, message.content, false)
         );
@@ -66,6 +64,10 @@ export const getHtml = async (
         message.embeds.forEach((embed) => {
             let EmbedBase = consts.EmbedBase;
             let MainContent = "";
+            EmbedBase = EmbedBase.replace(
+                "%EMBED_COLOR%",
+                embed.hexColor ? embed.hexColor : "000000"
+            );
             if (embed.author) {
                 MainContent += consts.EmbedAuthor.replace(
                     "%EMBED_AUTHOR_AVATAR_URL%",
@@ -102,7 +104,10 @@ export const getHtml = async (
                     }
                 });
                 MainContent += RegularFields;
-                InlineFieldBase.replace("%EMBED_INLINE_FIELDS%", InlineFields);
+                InlineFieldBase = InlineFieldBase.replace(
+                    "%EMBED_INLINE_FIELDS%",
+                    InlineFields
+                );
                 if (InlineFields !== "") {
                     MainContent += InlineFieldBase;
                 }
@@ -116,43 +121,60 @@ export const getHtml = async (
             let Footer = consts.EmbedFooter;
             if (embed.footer) {
                 if (embed.footer.iconURL) {
-                    Footer.replace(
+                    Footer = Footer.replace(
                         "%EMBED_FOOTER_IMAGE_URL%",
-                        embed.footer.iconURL
+                        embed.footer.iconURL || ""
                     );
                 } else {
-                    Footer.replace("%EMBED_FOOTER_IMAGE_URL%", "");
+                    Footer = Footer.replace("%EMBED_FOOTER_IMAGE_URL%", "");
                 }
-                Footer.replace("%EMBED_FOOTER_TEXT%", embed.footer.text);
+                Footer = Footer.replace(
+                    "%EMBED_FOOTER_TEXT%",
+                    embed.footer.text || ""
+                );
                 if (embed.timestamp) {
-                    Footer.replace(
+                    Footer = Footer.replace(
                         "%EMBED_FOOTER_TIMESTAMP%",
-                        embed.timestamp.toLocaleString(locale || "en")
+                        new Date(embed.timestamp).toLocaleString(
+                            locale || "en"
+                        ) || ""
                     );
                 } else {
-                    Footer.replace("%EMBED_FOOTER_TIMESTAMP%", "");
+                    Footer = Footer.replace("%EMBED_FOOTER_TIMESTAMP%", "");
                 }
+                MainContent += Footer;
             }
-            MainContent += Footer;
-            EmbedBase.replace("%EMBED_MAIN%", MainContent);
+            EmbedBase = EmbedBase.replace("%EMBED_MAIN%", MainContent);
             if (embed.thumbnail) {
-                EmbedBase.replace(
+                EmbedBase = EmbedBase.replace(
                     "%EMBED_THUMBNAIL%",
                     consts.EmbedThumbnail.replace(
                         "%EMBED_THUMBNAIL_IMAGE_URL%",
                         embed.thumbnail.url
                     )
                 );
+            } else {
+                EmbedBase = EmbedBase.replace("%EMBED_THUMBNAIL%", "");
             }
             Embeds += EmbedBase;
         });
-        MessageHTML.replace("%EMBEDS%", Embeds);
-        MessageHTML.replace("%IMAGES%", Images);
-        MessageHTML.replace("%FILES%", Files);
+        MessageHTML = MessageHTML.replace("%EMBEDS%", Embeds);
+        MessageHTML = MessageHTML.replace("%IMAGES%", Images);
+        MessageHTML = MessageHTML.replace("%FILES%", Files);
         ContentsHTML += MessageHTML;
     });
-    BaseHTML.replace("%CONTENTS%", ContentsHTML);
+    BaseHTML = BaseHTML.replace("%CONTENTS%", ContentsHTML);
     return BaseHTML;
+};
+
+const rgba = (hexcolor: string, opacity: number) => {
+    if (hexcolor.length !== 7) {
+        return null;
+    }
+    const red = parseInt(hexcolor.slice(1, -4), 16);
+    const green = parseInt(hexcolor.slice(3, -2), 16);
+    const blue = parseInt(hexcolor.slice(5), 16);
+    return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 };
 
 const generateContentHTML = (
@@ -160,24 +182,25 @@ const generateContentHTML = (
     content: string,
     embed?: Boolean
 ) => {
-    content.match(/<@[0-9]{17,19}>/g)?.forEach((str) => {
-        content.replace(
+    content.match(/<@![0-9]{17,19}>/g)?.forEach((str) => {
+        content = content.replace(
             str,
-            `<span class="highlight">@${
-                guild.members.cache.get(str.slice(2, -1))?.displayName
+            `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@${
+                guild.members.cache.get(str.slice(3, -1))?.displayName
             }</span>`
         );
     });
     content.match(/<@&[0-9]{17,19}>/g)?.forEach((str) => {
-        content.replace(
+        content = content.replace(
             str,
-            `<span class="highlight" style="color:#${
-                guild.roles.cache.get(str.slice(3, -1))?.hexColor
+            `<span class="highlight" style="background-color:${
+                rgba(guild.roles.cache.get(str.slice(3, -1))?.hexColor!, 0.4) ||
+                "rgba(79, 110, 223, 0.4)"
             }">@${guild.roles.cache.get(str.slice(3, -1))?.name}</span>`
         );
     });
     content.match(/<#[0-9]{17,19}>/g)?.forEach((str) => {
-        content.replace(
+        content = content.replace(
             str,
             `<span class="highlight">${
                 guild.channels.cache.get(str.slice(2, -1))?.type ===
@@ -187,24 +210,36 @@ const generateContentHTML = (
             }${guild.channels.cache.get(str.slice(2, -1))?.name}</span>`
         );
     });
-    content.match(/\*\*\.+\*\*/g)?.forEach((str) => {
-        content.replace(str, `<span class="bold">${str.slice(2, -2)}</span>`);
+    content.match(/\*\*\(\w|\s|.)+\*\*/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="bold">${str.slice(2, -2)}</span>`
+        );
     });
-    content.match(/\|\|.+\|\|/g)?.forEach((str) => {
-        content.replace(
+    content.match(/\|\|(\w|\s|.)+\|\|/g)?.forEach((str) => {
+        content = content.replace(
             str,
             `<span class="spoiler">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/~~.+~~/g)?.forEach((str) => {
-        content.replace(str, `<span class="strike">${str.slice(2, -2)}</span>`);
+    content.match(/~~(\w|\s|.)+~~/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="strike">${str.slice(2, -2)}</span>`
+        );
     });
-    content.match(/`.+`/g)?.forEach((str) => {
-        content.replace(str, `<span class="codeL">${str.slice(1, -1)}</span>`);
+    content.match(/```(\w|\s|.)+```/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="codeB">${str.slice(3, -3)}</span>`
+        );
     });
-    content.match(/```.+```/g)?.forEach((str) => {
-        content.replace(str, `<span class="codeB">${str.slice(3, -3)}</span>`);
+    content.match(/`(\w|\s|.)+`/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="codeL">${str.slice(1, -1)}</span>`
+        );
     });
-    content.replaceAll("\n", "<br>");
+    content = content.replaceAll("\n", "<br>");
     return content;
 };

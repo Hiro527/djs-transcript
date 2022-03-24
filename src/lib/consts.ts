@@ -67,6 +67,9 @@ export const Base = `<!DOCTYPE html>
             }
             .attachmentFile .fileName {
                 margin-left: 10px;
+                max-width: 150px;
+                overflow: hidden;
+                white-space: nowrap;
             }
             .attachmentFile .fileSize {
                 margin-left: 10px;
@@ -86,9 +89,8 @@ export const Base = `<!DOCTYPE html>
             .embed {
                 margin-top: 10px;
                 background-color: #23272A;
-                width: 600px;
+                width: 650px;
                 font-size: 12px;
-                border-left: #00FF00 solid 4px;
                 border-radius: 4px;
             }
             .embedContent {
@@ -151,8 +153,7 @@ export const Base = `<!DOCTYPE html>
                 font-size: 10px;
             }
             .embedThumbnail {
-                width: 100px;
-                height: 100px;
+                max-height: 80px;
             }
             .spoiler {
                 background-color: #5f5f5f;
@@ -164,7 +165,6 @@ export const Base = `<!DOCTYPE html>
                 font-weight: bold;
             }
             .highlight {
-                background-color: rgba(79, 110, 223, 0.4);
                 padding-left: 3px;
                 padding-right: 3px;
                 border-radius: 2px;
@@ -218,7 +218,7 @@ export const File = `<div class="attachmentFile">
     <div class="fileSize">%FILE_SIZE%</div>
     <div class="downloadBtn"><a class="noDeco" href="%FILE_URL%" target="_blank" rel="noopener noreferrer">Download</a></div>
 </div>`;
-export const EmbedBase = `<div class="embed">
+export const EmbedBase = `<div class="embed" style="border-left: %EMBED_COLOR% solid 4px;">
     <div class="embedContent">
         <div class="embedContentMain">
             %EMBED_MAIN%
