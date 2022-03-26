@@ -95,7 +95,7 @@
             }
             .embedContent {
                 display: flex;
-                margin: 20px;
+                margin: 15px;
             }
             .embedAuthor {
                 display: flex;
@@ -109,10 +109,9 @@
                 font-size: 14px;
                 margin-left: 10px;
                 font-weight: bold;
+                margin-bottom: 10px
             }
             .embedTitle {
-                margin-top: 10px;
-                color: #00b0f4;
                 font-size: 16px;
                 font-weight: bold;
             }
@@ -129,10 +128,10 @@
                 margin-top: 10px;
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: flex-start;
             }
             .embedInlineField {
-                width: 150px
+                width: 180px;
             }
             .embedImage {
                 max-width: 450px;
@@ -199,13 +198,19 @@
             .quotedText {
                 margin-left: 10px;
             }
+            a:link, a:visited, a:hover, a:active {
+                color: #00b0f4;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
         <header>
             <img id="serverIcon" src="https://cdn.discordapp.com/icons/698690249571958835/efe15eeca3fa041de093a4343b9af92a.webp">
             <h1>バックヤード - djs-transcript</h1>
-            <div id="headerTimestamp">2022/3/26 12:13:06</div>
+            <div id="headerTimestamp">2022/3/27 1:40:32</div>
         </header>
         <div class="message">
     <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
@@ -266,15 +271,15 @@
             nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:07:51</span>
         </div>
         <div class="messageContent">
-            All Embeds are Supported<br>https://twitter.com/nullA1m
+            All Embeds are Supported<br><a class="noDeco" href=https://twitter.com/nullA1m>https://twitter.com/nullA1m</a>
         </div>
         <div class="embed" style="border-left: #1da1f2 solid 4px;">
     <div class="embedContent">
         <div class="embedContentMain">
             <div class="embedTitle">
-    ぬるえいむ (@nullA1m)
+    <a class="noDeco" href="https://twitter.com/nullA1m">ぬるえいむ (@nullA1m)</a>
 </div><div class="embedDesc">
-    なんちゃって灰色プログラマー | @TIMPKrunker | 生放送 https://t.co/kITgKg4VjX | Discord https://t.co/I12lA3KJgX | 推し絵師さん @1kurusk @obktof | ♡ @Vspo77
+    なんちゃって灰色プログラマー | @TIMPKrunker | 生放送 <a class="noDeco" href=https://t.co/kITgKg4VjX>https://t.co/kITgKg4VjX</a> | Discord <a class="noDeco" href=https://t.co/I12lA3KJgX>https://t.co/I12lA3KJgX</a> | 推し絵師さん @1kurusk @obktof | ♡ @Vspo77
 </div>
 <div class="embedInlineFieldHolder">
     <div class="embedInlineField">
@@ -333,7 +338,7 @@
         
         <div class="attachmentFile">
     <div class="fileName">README.md</div>
-    <div class="fileSize">0MB</div>
+    <div class="fileSize">1.06KB</div>
     <div class="downloadBtn"><a class="noDeco" href="https://cdn.discordapp.com/attachments/956522555383111700/956525084472909864/README.md" target="_blank" rel="noopener noreferrer">Download</a></div>
 </div>
     </div>

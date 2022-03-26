@@ -66,12 +66,19 @@ export const getHtml = async (
                 MainContent += consts.EmbedAuthor.replace(
                     "%EMBED_AUTHOR_AVATAR_URL%",
                     embed.author.iconURL || ""
-                ).replace("%EMBED_AUTHOR_NAME%", embed.author.name);
+                ).replace(
+                    "%EMBED_AUTHOR_NAME%",
+                    embed.author.url
+                        ? `<a class="noDeco" style="color:inherit" href="${embed.author.url}">${embed.author.name}</a>`
+                        : embed.author.name
+                );
             }
             if (embed.title) {
                 MainContent += consts.EmbedTitle.replace(
                     "%EMBED_TITLE%",
                     embed.title
+                    ? `<a class="noDeco" href="${embed.url}">${embed.title}</a>`
+                    : embed.title
                 );
             }
             if (embed.description) {
@@ -276,6 +283,12 @@ const generateContentHTML = (
             `<span class="codeL">${str.slice(1, -1)}</span>`
         );
     });
+    content.match(/https?:\/\/[\S^\n]+/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<a class="noDeco" href=${str}>${str}</a>`
+        )
+    })
     if (embed) {
         content.match(/\[.+\]\(.+\)/g)?.forEach((str) => {
             const label = str.match(/\[.+\]/g)!;

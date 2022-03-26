@@ -95,7 +95,7 @@ export const Base = `<!DOCTYPE html>
             }
             .embedContent {
                 display: flex;
-                margin: 20px;
+                margin: 15px;
             }
             .embedAuthor {
                 display: flex;
@@ -109,9 +109,9 @@ export const Base = `<!DOCTYPE html>
                 font-size: 14px;
                 margin-left: 10px;
                 font-weight: bold;
+                margin-bottom: 10px
             }
             .embedTitle {
-                margin-top: 10px;
                 font-size: 16px;
                 font-weight: bold;
             }
@@ -128,10 +128,10 @@ export const Base = `<!DOCTYPE html>
                 margin-top: 10px;
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: flex-start;
             }
             .embedInlineField {
-                width: 150px
+                width: 180px;
             }
             .embedImage {
                 max-width: 450px;
@@ -200,6 +200,9 @@ export const Base = `<!DOCTYPE html>
             }
             a:link, a:visited, a:hover, a:active {
                 color: #00b0f4;
+            }
+            a:hover {
+                text-decoration: underline;
             }
         </style>
     </head>
