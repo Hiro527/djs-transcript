@@ -69,7 +69,7 @@ export const getHtml = async (
                 ).replace(
                     "%EMBED_AUTHOR_NAME%",
                     embed.author.url
-                        ? `<a class="noDeco" style="color:inherit" href="${embed.author.url}">${embed.author.name}</a>`
+                        ? `<a class="noDeco" style="color:inherit" href="${embed.author.url}" target="_blank" rel="noopener noreferrer">${embed.author.name}</a>`
                         : embed.author.name
                 );
             }
@@ -77,7 +77,7 @@ export const getHtml = async (
                 MainContent += consts.EmbedTitle.replace(
                     "%EMBED_TITLE%",
                     embed.title
-                    ? `<a class="noDeco" href="${embed.url}">${embed.title}</a>`
+                    ? `<a class="noDeco" href="${embed.url}" target="_blank" rel="noopener noreferrer">${embed.title}</a>`
                     : embed.title
                 );
             }
@@ -286,7 +286,7 @@ const generateContentHTML = (
     content.match(/https?:\/\/[\S^\n]+/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<a class="noDeco" href=${str}>${str}</a>`
+            `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
         )
     })
     if (embed) {
@@ -298,7 +298,7 @@ const generateContentHTML = (
                 `<a class="noDeco" href="${url[0].slice(
                     1,
                     -1
-                )}">${label[0].slice(1, -1)}</a>`
+                )}" target="_blank" rel="noopener noreferrer">${label[0].slice(1, -1)}</a>`
             );
         });
     }
