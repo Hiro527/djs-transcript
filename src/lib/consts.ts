@@ -112,7 +112,6 @@ export const Base = `<!DOCTYPE html>
             }
             .embedTitle {
                 margin-top: 10px;
-                color: #00b0f4;
                 font-size: 16px;
                 font-weight: bold;
             }
@@ -198,6 +197,9 @@ export const Base = `<!DOCTYPE html>
             }
             .quotedText {
                 margin-left: 10px;
+            }
+            a:link, a:visited, a:hover, a:active {
+                color: #00b0f4;
             }
         </style>
     </head>
