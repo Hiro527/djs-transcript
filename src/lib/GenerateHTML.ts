@@ -50,13 +50,7 @@ export const getHtml = async (
                 Images += consts.Image.replace("%IMAGE_URL%", attachment.url);
             } else {
                 Files += consts.File.replace("%FILE_NAME%", attachment.name!)
-                    .replace(
-                        "%FILE_SIZE%",
-                        `${
-                            Math.floor((attachment.size / 1000 / 1000) * 10) /
-                            10
-                        }MB`
-                    )
+                    .replace("%FILE_SIZE%", `${fileSize(attachment.size)}`)
                     .replace("%FILE_URL%", attachment.url);
             }
         });
@@ -135,9 +129,9 @@ export const getHtml = async (
                 if (embed.timestamp) {
                     Footer = Footer.replace(
                         "%EMBED_FOOTER_TIMESTAMP%",
-                        `<span style="color:rgba(255, 255, 255, 0.6)"> ･ </span>${new Date(embed.timestamp).toLocaleString(
-                            locale || "en"
-                        )}`
+                        `<span style="color:rgba(255, 255, 255, 0.6)"> ･ </span>${new Date(
+                            embed.timestamp
+                        ).toLocaleString(locale || "en")}`
                     );
                 } else {
                     Footer = Footer.replace("%EMBED_FOOTER_TIMESTAMP%", "");
@@ -167,6 +161,7 @@ export const getHtml = async (
     return BaseHTML;
 };
 
+// Hexcolorを任意の透明度でrgba形式に変換する
 const rgba = (hexcolor: string, opacity: number) => {
     if (hexcolor.length !== 7) {
         return null;
@@ -177,6 +172,17 @@ const rgba = (hexcolor: string, opacity: number) => {
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 };
 
+// ファイルサイズに応じてKB/MBに変換する
+const fileSize = (size: number) => {
+    size = Math.floor((size / 1000) * 100) / 100; // KB
+    if (size >= 1000) {
+        return `${Math.floor((size / 1000) * 100) / 100}MB`;
+    } else {
+        return `${size}KB`;
+    }
+};
+
+// Message.contentとembed.description用
 const generateContentHTML = (
     guild: Guild,
     content: string,
@@ -239,13 +245,17 @@ const generateContentHTML = (
     content.match(/^> .+/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<div class="quote"><div class="quotedText">${str.slice(2)}</div></div>`
+            `<div class="quote"><div class="quotedText">${str.slice(
+                2
+            )}</div></div>`
         );
     });
     content.match(/\n> .+/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<div class="quote"><div class="quotedText">${str.slice(3)}</div></div>`
+            `<div class="quote"><div class="quotedText">${str.slice(
+                3
+            )}</div></div>`
         );
     });
     content.match(/```[\s\S]*```/g)?.forEach((str) => {
@@ -266,6 +276,19 @@ const generateContentHTML = (
             `<span class="codeL">${str.slice(1, -1)}</span>`
         );
     });
+    if (embed) {
+        content.match(/\[.+\]\(.+\)/g)?.forEach((str) => {
+            const label = str.match(/\[.+\]/g)!;
+            const url = str.match(/\(.+\)/g)!;
+            content = content.replace(
+                str,
+                `<a class="noDeco" href="${url[0].slice(
+                    1,
+                    -1
+                )}">${label[0].slice(1, -1)}</a>`
+            );
+        });
+    }
     content = content.replaceAll("\n", "<br>");
     return content;
 };
