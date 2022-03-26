@@ -236,12 +236,18 @@ const generateContentHTML = (
             `<span class="strike">${str.slice(2, -2)}</span>`
         );
     });
-    // content.match(/> [\s\S]*\n/g)?.forEach((str) => {
-    //     content = content.replace(
-    //         str,
-    //         `<div class="quote"><div class="quotedText">${str.slice(1)}</div>/div>`
-    //     );
-    // });
+    content.match(/^> .+/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<div class="quote"><div class="quotedText">${str.slice(2)}</div></div>`
+        );
+    });
+    content.match(/\n> .+/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<div class="quote"><div class="quotedText">${str.slice(3)}</div></div>`
+        );
+    });
     content.match(/```[\s\S]*```/g)?.forEach((str) => {
         let startIndex = 3;
         if (str.match(/^```.+\n/)) {

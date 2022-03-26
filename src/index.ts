@@ -1,4 +1,4 @@
-import { Channel, Client, Message, NewsChannel, TextChannel } from "discord.js";
+import { AnyChannel, Channel, Client, Message, NewsChannel, TextChannel } from "discord.js";
 import { v4 } from "uuid";
 import * as path from "path";
 import * as fs from "fs/promises";
@@ -6,7 +6,7 @@ import { getHtml } from "./lib/GenerateHTML";
 
 export const transcript = async (
     client: Client,
-    channel: Channel,
+    channel: AnyChannel,
     fpath: string,
     locale?: string
 ) => {
