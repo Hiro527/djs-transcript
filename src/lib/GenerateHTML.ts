@@ -288,12 +288,14 @@ const generateContentHTML = (
         );
     });
     if (embed) {
+        /*
         content.match(/  /g)?.forEach((str) => {
             content = content.replace(
                 str,
                 `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
             );
         });
+        */
         content.match(/\[[\S\s]*?\]\([\S\s]*?\)/g)?.forEach((str) => {
             const label = str.match(/\[[\S\s]*?\]/g)!;
             const url = str.match(/\([\S\s]*?\)/g)!;
