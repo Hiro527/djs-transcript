@@ -77,8 +77,8 @@ export const getHtml = async (
                 MainContent += consts.EmbedTitle.replace(
                     "%EMBED_TITLE%",
                     embed.title
-                    ? `<a class="noDeco" href="${embed.url}" target="_blank" rel="noopener noreferrer">${embed.title}</a>`
-                    : embed.title
+                        ? `<a class="noDeco" href="${embed.url}" target="_blank" rel="noopener noreferrer">${embed.title}</a>`
+                        : embed.title
                 );
             }
             if (embed.description) {
@@ -231,38 +231,42 @@ const generateContentHTML = (
             }${guild.channels.cache.get(str.slice(2, -1))?.name}</span>`
         );
     });
-    content.match(/\*\*[\s\S]*\*\*/g)?.forEach((str) => {
+    content.match(/^> ([\s\S]*?\n|[\s\S]*?$)/g)?.forEach((str) => {
+        let fixedstr = str;
+        if (str.endsWith('\n')) {
+            fixedstr = str.slice(0, -1);
+        }
+        content = content.replace(str, `<div class="quote"><div class="quotedText">${fixedstr.slice(2)}</div></div>`);
+    });
+    content.match(/\n> ([\s\S]*?\n|[\s\S]*?$)/g)?.forEach((str) => {
+        let fixedstr = str;
+        if (str.endsWith('\n')) {
+            fixedstr = str.slice(0, -1);
+        }
+        content = content.replace(str, `<div class="quote"><div class="quotedText">${fixedstr.slice(3)}</div></div>`);
+    });
+    content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="bold">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/\|\|[\s\S]*\|\|/g)?.forEach((str) => {
+    content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="spoiler">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/~~[\s\S]*~~/g)?.forEach((str) => {
+    content.match(/~~[\s\S]*?~~/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="strike">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/^> .+/g)?.forEach((str) => {
+    content.match(/__[\s\S]*?__/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<div class="quote"><div class="quotedText">${str.slice(
-                2
-            )}</div></div>`
-        );
-    });
-    content.match(/\n> .+/g)?.forEach((str) => {
-        content = content.replace(
-            str,
-            `<div class="quote"><div class="quotedText">${str.slice(
-                3
-            )}</div></div>`
+            `<span class="underline">${str.slice(2, -2)}</span>`
         );
     });
     content.match(/```[\s\S]*```/g)?.forEach((str) => {
@@ -283,22 +287,33 @@ const generateContentHTML = (
             `<span class="codeL">${str.slice(1, -1)}</span>`
         );
     });
-    content.match(/https?:\/\/[\S^\n]+/g)?.forEach((str) => {
-        content = content.replace(
-            str,
-            `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
-        )
-    })
     if (embed) {
-        content.match(/\[[^\[\]].+\]\([^\(\)].+\)/g)?.forEach((str) => {
-            const label = str.match(/\[[^\[\]].+\]/g)!;
-            const url = str.match(/\([^\(\)].+\)/g)!;
+        content.match(/  /g)?.forEach((str) => {
+            content = content.replace(
+                str,
+                `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
+            );
+        });
+        content.match(/\[[\S\s]*?\]\([\S\s]*?\)/g)?.forEach((str) => {
+            const label = str.match(/\[[\S\s]*?\]/g)!;
+            const url = str.match(/\([\S\s]*?\)/g)!;
             content = content.replace(
                 str,
                 `<a class="noDeco" href="${url[0].slice(
                     1,
                     -1
-                )}" target="_blank" rel="noopener noreferrer">${label[0].slice(1, -1)}</a>`
+                )}" target="_blank" rel="noopener noreferrer">${label[0].slice(
+                    1,
+                    -1
+                )}</a>`
+            );
+        });
+    }
+    if (!embed) {
+        content.match(/https?:\/\/\S+/g)?.forEach((str) => {
+            content = content.replace(
+                str,
+                `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
             );
         });
     }

@@ -163,6 +163,9 @@ export const Base = `<!DOCTYPE html>
             .bold {
                 font-weight: bold;
             }
+            .underline {
+                text-decoration: underline;
+            }
             .highlight {
                 padding-left: 3px;
                 padding-right: 3px;
