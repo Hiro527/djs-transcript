@@ -290,9 +290,9 @@ const generateContentHTML = (
         )
     })
     if (embed) {
-        content.match(/\[[.^\[^\]+]\].\]\([.^\(^\)+]+\)/g)?.forEach((str) => {
-            const label = str.match(/\[[.^\[^\]+]\].\]/g)!;
-            const url = str.match(/\([.^\(^\)+]+\)/g)!;
+        content.match(/\[[\S\s^\[^\]]+\]\([\S^\(^\)]+\)/g)?.forEach((str) => {
+            const label = str.match(/\[[\S\s^\[^\]]+\]/g)!;
+            const url = str.match(/\([\S^\(^\)]+\)/g)!;
             content = content.replace(
                 str,
                 `<a class="noDeco" href="${url[0].slice(
