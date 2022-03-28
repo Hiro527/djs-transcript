@@ -21,6 +21,7 @@ export const getHtml = async (
             new Date().toLocaleString(locale || "en")
         );
     let ContentsHTML = "";
+    // メッセージごとの処理
     messages.forEach((message) => {
         let MessageHTML = consts.Message.replace(
             "%MEMBER_AVATAR%",
@@ -54,6 +55,7 @@ export const getHtml = async (
                     .replace("%FILE_URL%", attachment.url);
             }
         });
+        // Embedの変換処理
         let Embeds = "";
         message.embeds.forEach((embed) => {
             let EmbedBase = consts.EmbedBase;
@@ -76,7 +78,7 @@ export const getHtml = async (
             if (embed.title) {
                 MainContent += consts.EmbedTitle.replace(
                     "%EMBED_TITLE%",
-                    embed.title
+                    embed.url
                         ? `<a class="noDeco" href="${embed.url}" target="_blank" rel="noopener noreferrer">${embed.title}</a>`
                         : embed.title
                 );
@@ -195,6 +197,7 @@ const generateContentHTML = (
     content: string,
     embed?: Boolean
 ) => {
+    // ユーザーメンション
     content.match(/<@![0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
             str,
@@ -211,6 +214,7 @@ const generateContentHTML = (
             }</span>`
         );
     });
+    // ロールメンション
     content.match(/<@&[0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
             str,
@@ -220,6 +224,7 @@ const generateContentHTML = (
             }">@${guild.roles.cache.get(str.slice(3, -1))?.name}</span>`
         );
     });
+    // チャンネル
     content.match(/<#[0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
             str,
@@ -231,6 +236,7 @@ const generateContentHTML = (
             }${guild.channels.cache.get(str.slice(2, -1))?.name}</span>`
         );
     });
+    // 引用
     content.match(/^> ([\s\S]*?\n|[\s\S]*?$)/g)?.forEach((str) => {
         let fixedstr = str;
         if (str.endsWith('\n')) {
@@ -245,30 +251,35 @@ const generateContentHTML = (
         }
         content = content.replace(str, `<div class="quote"><div class="quotedText">${fixedstr.slice(3)}</div></div>`);
     });
+    // 太字
     content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="bold">${str.slice(2, -2)}</span>`
         );
     });
-    content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
+    // スポイラー
+    content.match(/\|\|[\s\S]*?\|\|/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="spoiler">${str.slice(2, -2)}</span>`
         );
     });
+    // 打ち消し線
     content.match(/~~[\s\S]*?~~/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="strike">${str.slice(2, -2)}</span>`
         );
     });
+    // アンダーライン
     content.match(/__[\s\S]*?__/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="underline">${str.slice(2, -2)}</span>`
         );
     });
+    // コードブロック
     content.match(/```[\s\S]*```/g)?.forEach((str) => {
         let startIndex = 3;
         if (str.match(/^```.+\n/)) {
@@ -281,14 +292,17 @@ const generateContentHTML = (
             `<div class="codeB">${str.slice(startIndex, -3)}</div>`
         );
     });
+    // コードライン
     content.match(/`[\s\S]*`/g)?.forEach((str) => {
         content = content.replace(
             str,
             `<span class="codeL">${str.slice(1, -1)}</span>`
         );
     });
+    // リンク
     if (embed) {
-        /*
+        // Issue: #2 (https://github.com/Hiro527/djs-transcript/issues/2)
+        /* 
         content.match(/  /g)?.forEach((str) => {
             content = content.replace(
                 str,
@@ -296,6 +310,7 @@ const generateContentHTML = (
             );
         });
         */
+        // md記法のリンク
         content.match(/\[[\S\s]*?\]\([\S\s]*?\)/g)?.forEach((str) => {
             const label = str.match(/\[[\S\s]*?\]/g)!;
             const url = str.match(/\([\S\s]*?\)/g)!;
@@ -311,7 +326,8 @@ const generateContentHTML = (
             );
         });
     }
-    if (!embed) {
+    else {
+        // 通常メッセージのリンク
         content.match(/https?:\/\/\S+/g)?.forEach((str) => {
             content = content.replace(
                 str,
@@ -319,6 +335,7 @@ const generateContentHTML = (
             );
         });
     }
+    // 改行処理
     content = content.replaceAll("\n", "<br>");
     return content;
 };
