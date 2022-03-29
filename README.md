@@ -5,6 +5,10 @@ Transcipt Generator for Discord.js
 
 Sample Page: https://hiro527.jp/djs-transcript/sample.html
 
+# User Disclaimer / ユーザー免責事項
+ Before you use this library in your own Discord bot, you must let server members know that their messages can be transcriped as an file. This is very important to secure their privacy. You will be treated as you've agreed since download this library. And also, I won't be responsible about trouble that is caused by against this agreement.\
+ このライブラリをDiscord botで使用する前に、サーバーメンバーに対してメッセージがログファイルとして転写されることを知らせておく必要があります。これは彼らのプライバシーを守るために非常に重要なことです。このライブラリをダウンロードした時点であなたはこれに同意したものと扱われます。また、開発者はこれに反したことにより発生するトラブルに関して一切の責任を負いかねます。
+
 # Important / 重要
  This library is currently in the development stage. Please keep an eye out for updates, as it is quite possible that unknown bugs or other issues may arise. We will try to fix bugs as soon as possible, but please understand that the developer is a student and time may not always be available.
 
