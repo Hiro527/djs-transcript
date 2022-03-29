@@ -5,21 +5,29 @@ import {
     TextBasedChannel,
     TextChannel,
 } from "discord.js";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import RelativeTime from "dayjs/plugin/relativeTime";
 import * as consts from "./consts";
+
+dayjs.extend(localizedFormat);
+dayjs.extend(RelativeTime);
+
 export const getHtml = async (
     messages: Message[],
     channel: TextChannel | NewsChannel,
     guild: Guild,
     locale?: string
 ) => {
+    if (locale) {
+        require(`dayjs/locale/${locale}`);
+        dayjs.locale(locale || "en");
+    }
     await guild.members.fetch();
     let BaseHTML = consts.Base.replaceAll("%SERVER%", guild.name)
         .replaceAll("%CHANNEL_NAME%", channel.name)
         .replaceAll("%SERVER_ICON%", guild.iconURL()!)
-        .replaceAll(
-            "%TRANSCRIPT_TIMESTAMP%",
-            new Date().toLocaleString(locale || "en")
-        );
+        .replaceAll("%TRANSCRIPT_TIMESTAMP%", dayjs().format("L LTS"));
     let ContentsHTML = "";
     // メッセージごとの処理
     messages.forEach((message) => {
@@ -30,19 +38,19 @@ export const getHtml = async (
             .replace("%MEMBER_TAG%", message.member?.user.tag!)
             .replace(
                 "%MESSAGE_CREATED_TIMESTAMP%",
-                message.createdAt.toLocaleString(locale || "en")
+                dayjs(message.createdAt).format("L LTS")
             );
         if (message.editedAt) {
             MessageHTML = MessageHTML.replace(
                 "%MESSAGE_EDITED_TIMESTAMP%",
-                ` Edited at ${message.editedAt.toLocaleString(locale || "en")}`
+                ` Edited at ${dayjs(message.editedAt).format("L LTS")}`
             );
         } else {
             MessageHTML = MessageHTML.replace("%MESSAGE_EDITED_TIMESTAMP%", "");
         }
         MessageHTML = MessageHTML.replace(
             "%MESSAGE_CONTENT%",
-            generateContentHTML(guild, message.content, false)
+            generateContentHTML(guild, message.content, locale, false)
         );
         let Files = "";
         let Images = "";
@@ -86,7 +94,7 @@ export const getHtml = async (
             if (embed.description) {
                 MainContent += consts.EmbedDesc.replace(
                     "%EMBED_DESC%",
-                    generateContentHTML(guild, embed.description, true)
+                    generateContentHTML(guild, embed.description, locale, false)
                 );
             }
             let RegularFields = "";
@@ -97,18 +105,38 @@ export const getHtml = async (
                     if (field.inline) {
                         InlineFields += consts.EmbedInlineField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            generateContentHTML(guild, field.name, true)
+                            generateContentHTML(
+                                guild,
+                                field.name,
+                                locale,
+                                false
+                            )
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
-                            generateContentHTML(guild, field.value, true)
+                            generateContentHTML(
+                                guild,
+                                field.value,
+                                locale,
+                                false
+                            )
                         );
                     } else {
                         RegularFields += consts.EmbedRegularField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            generateContentHTML(guild, field.name, true)
+                            generateContentHTML(
+                                guild,
+                                field.name,
+                                locale,
+                                false
+                            )
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
-                            generateContentHTML(guild, field.value, true)
+                            generateContentHTML(
+                                guild,
+                                field.value,
+                                locale,
+                                false
+                            )
                         );
                     }
                 });
@@ -151,9 +179,7 @@ export const getHtml = async (
                             embed.footer.text
                                 ? '<span style="color:rgba(255, 255, 255, 0.6)"> ･ </span>'
                                 : ""
-                        }${new Date(embed.timestamp).toLocaleString(
-                            locale || "en"
-                        )}`
+                        }${dayjs(new Date(embed.timestamp)).format("L")}`
                     );
                 } else {
                     Footer = Footer.replace("%EMBED_FOOTER_TIMESTAMP%", "");
@@ -208,6 +234,7 @@ const fileSize = (size: number) => {
 const generateContentHTML = (
     guild: Guild,
     content: string,
+    locale?: string,
     embed?: Boolean
 ) => {
     // ユーザーメンション
@@ -254,6 +281,43 @@ const generateContentHTML = (
                 guild.channels.cache.get(str.slice(2, -1))?.name ||
                 "deleted-channel"
             }</span>`
+        );
+    });
+    // タイムスタンプ
+    content.match(/<t:[0-9]{1,20}(:(t|T|d|D|f|F|R))?>/g)?.forEach((str) => {
+        const timestamp = Number(str.match(/[0-9]{1,20}/g)![0]) * 1000;
+        const mode = str.match(/(t|T|d|D|f|F|R)(?=>)/g)![0];
+        const day = dayjs(timestamp);
+        let timestampText = "";
+        switch (mode) {
+            case "t":
+                timestampText = day.format("LT");
+                break;
+            case "T":
+                timestampText = day.format("LTS");
+                break;
+            case "d":
+                timestampText = day.format("L");
+                break;
+            case "D":
+                timestampText = day.format("LL");
+                break;
+            case "f":
+                timestampText = day.format("LLL");
+                break;
+            case "F":
+                timestampText = day.format("LLLL");
+                break;
+            case "R":
+                timestampText = day.fromNow();
+                break;
+            default:
+                timestampText = day.format("LLL");
+                break;
+        }
+        content = content.replace(
+            str,
+            `<div class="spoiler" style="display:inline-block">${timestampText}</div>`
         );
     });
     // 引用
