@@ -131,8 +131,11 @@ export const getHtml = async (
             if (embed.footer) {
                 if (embed.footer.iconURL) {
                     Footer = Footer.replace(
-                        "%EMBED_FOOTER_IMAGE_URL%",
-                        embed.footer.iconURL || ""
+                        "%EMBED_FOOTER_IMAGE%",
+                        consts.EmbedFooterImage.replace(
+                            "%EMBED_FOOTER_IMAGE_URL%",
+                            embed.footer.iconURL
+                        )
                     );
                 } else {
                     Footer = Footer.replace("%EMBED_FOOTER_IMAGE_URL%", "");
@@ -144,9 +147,13 @@ export const getHtml = async (
                 if (embed.timestamp) {
                     Footer = Footer.replace(
                         "%EMBED_FOOTER_TIMESTAMP%",
-                        `<span style="color:rgba(255, 255, 255, 0.6)"> ･ </span>${new Date(
-                            embed.timestamp
-                        ).toLocaleString(locale || "en")}`
+                        `${
+                            embed.footer.text
+                                ? '<span style="color:rgba(255, 255, 255, 0.6)"> ･ </span>'
+                                : ""
+                        }${new Date(embed.timestamp).toLocaleString(
+                            locale || "en"
+                        )}`
                     );
                 } else {
                     Footer = Footer.replace("%EMBED_FOOTER_TIMESTAMP%", "");
@@ -208,7 +215,8 @@ const generateContentHTML = (
         content = content.replace(
             str,
             `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@${
-                guild.members.cache.get(str.slice(3, -1))?.displayName
+                guild.members.cache.get(str.slice(3, -1))?.displayName ||
+                "deleted-user"
             }</span>`
         );
     });
@@ -216,7 +224,8 @@ const generateContentHTML = (
         content = content.replace(
             str,
             `<span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@${
-                guild.members.cache.get(str.slice(2, -1))?.displayName
+                guild.members.cache.get(str.slice(2, -1))?.displayName ||
+                "deleted-user"
             }</span>`
         );
     });
@@ -227,7 +236,9 @@ const generateContentHTML = (
             `<span class="highlight" style="background-color:${
                 rgba(guild.roles.cache.get(str.slice(3, -1))?.hexColor!, 0.4) ||
                 "rgba(79, 110, 223, 0.4)"
-            }">@${guild.roles.cache.get(str.slice(3, -1))?.name}</span>`
+            }">@${
+                guild.roles.cache.get(str.slice(3, -1))?.name || "deleted-role"
+            }</span>`
         );
     });
     // チャンネル
@@ -239,7 +250,10 @@ const generateContentHTML = (
                 "GUILD_VOICE"
                     ? "🔊"
                     : "#"
-            }${guild.channels.cache.get(str.slice(2, -1))?.name}</span>`
+            }${
+                guild.channels.cache.get(str.slice(2, -1))?.name ||
+                "deleted-channel"
+            }</span>`
         );
     });
     // 引用
