@@ -97,13 +97,19 @@ export const getHtml = async (
                     if (field.inline) {
                         InlineFields += consts.EmbedInlineField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            field.name
-                        ).replace("%EMBED_FIELD_VALUE%", field.value);
+                            generateContentHTML(guild, field.name, true)
+                        ).replace(
+                            "%EMBED_FIELD_VALUE%",
+                            generateContentHTML(guild, field.value, true)
+                        );
                     } else {
                         RegularFields += consts.EmbedRegularField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            field.name
-                        ).replace("%EMBED_FIELD_VALUE%", field.value);
+                            generateContentHTML(guild, field.name, true)
+                        ).replace(
+                            "%EMBED_FIELD_VALUE%",
+                            generateContentHTML(guild, field.value, true)
+                        );
                     }
                 });
                 MainContent += RegularFields;
