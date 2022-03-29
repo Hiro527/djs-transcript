@@ -398,14 +398,14 @@ const generateContentHTML = (
         }
         content = content.replace(
             str,
-            `<div class="codeB">${str.slice(startIndex, -3)}</div>`
+            `<div class="codeB${embed ? 'e' : ''}">${str.slice(startIndex, -3)}</div>`
         );
     });
     // コードライン
     content.match(/`[\s\S]*`/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<span class="codeL">${str.slice(1, -1)}</span>`
+            `<span class="codeL${embed ? 'e' : ''}">${str.slice(1, -1)}</span>`
         );
     });
     // リンク

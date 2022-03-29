@@ -189,6 +189,22 @@ export const Base = `<!DOCTYPE html>
                 border-radius: 3px;
                 font-family: monospace;
             }
+            .codeBe {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding: 7px;
+                background-color: #111314;
+                border: rgba(0, 0, 0, 0.4) solid 1px;
+                border-radius: 5px;
+                width: 600px;
+                font-family: monospace;
+            }
+            .codeLe {
+                background-color: #111314;
+                padding: 5px;
+                border-radius: 3px;
+                font-family: monospace;
+            }
             .noDeco {
                 text-decoration: none;
             }
