@@ -167,6 +167,7 @@ export const Base = `<!DOCTYPE html>
                 text-decoration: underline;
             }
             .highlight {
+                font-weight: normal;
                 padding-left: 3px;
                 padding-right: 3px;
                 border-radius: 4px;
@@ -283,7 +284,8 @@ export const EmbedInlineField = `<div class="embedInlineField">
 export const EmbedImage = `<img class="embedImage" src="%EMBED_IMAGE_URL%">`;
 export const EmbedFooterTimestamp = `<span style="color: rgba(255, 255, 255, 0.4);"> • </span>%EMBED_FOOTER_TIMESTAMP%`;
 export const EmbedFooter = `<div class="embedFooter">
-    <img class="embedFooterImage" src="%EMBED_FOOTER_IMAGE_URL%">
+    %EMBED_FOOTER_IMAGE%
     <div class="embedFooterText">%EMBED_FOOTER_TEXT%%EMBED_FOOTER_TIMESTAMP%</div>
 </div>`;
+export const EmbedFooterImage = `<img class="embedFooterImage" src="%EMBED_FOOTER_IMAGE_URL%">`
 export const EmbedThumbnail = `<img class="embedThumbnail" src="%EMBED_THUMBNAIL_IMAGE_URL%">`;
