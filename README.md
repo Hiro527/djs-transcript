@@ -10,6 +10,15 @@ Sample Page: https://hiro527.jp/djs-transcript/sample.html
 
  このライブラリは現在開発段階です。未知のバグやその他の問題を引き起こす可能性が十分あるため、常にアップデートに気を配っておいてください。可能な限り早急なバグ修正に取り掛かりますが、開発者が学生であるため時間がなかなか取れない場合があることをご了承ください。
 
+# v0.4.0
+- Fixed an issue that it throws an error when last message was deleted. / 最後に送信されたメッセージが削除された場合に出るエラーを修正しました。
+- Fixed some styles for embeds. / embedのスタイルを修正しました。
+- Now, all timestamps are compatible with I18n. / すべてのタイムスタンプをI18nに対応しました。
+- Unix Timestamp is supported. / Unixタイムスタンプに対応しました。
+- Deleted user/channel/role are supported. / 削除されたユーザー/チャンネル/ロールの表示に対応しました。
+- Fixed an issue that url in embeds hadn't shown as hyper link. / embed内のurlがハイパーリンクとして表示されない問題を修正しました。
+- Fixed an issue that markdown in fields hadn't been parsed. / field無いのマークダウンがパースされていない問題を修正しました。
+
 # Usage / 使い方
 ## JavaScript
 ```js
