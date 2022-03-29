@@ -239,17 +239,27 @@ const generateContentHTML = (
     // 引用
     content.match(/^> ([\s\S]*?\n|[\s\S]*?$)/g)?.forEach((str) => {
         let fixedstr = str;
-        if (str.endsWith('\n')) {
+        if (str.endsWith("\n")) {
             fixedstr = str.slice(0, -1);
         }
-        content = content.replace(str, `<div class="quote"><div class="quotedText">${fixedstr.slice(2)}</div></div>`);
+        content = content.replace(
+            str,
+            `<div class="quote"><div class="quotedText">${fixedstr.slice(
+                2
+            )}</div></div>`
+        );
     });
     content.match(/\n> ([\s\S]*?\n|[\s\S]*?$)/g)?.forEach((str) => {
         let fixedstr = str;
-        if (str.endsWith('\n')) {
+        if (str.endsWith("\n")) {
             fixedstr = str.slice(0, -1);
         }
-        content = content.replace(str, `<div class="quote"><div class="quotedText">${fixedstr.slice(3)}</div></div>`);
+        content = content.replace(
+            str,
+            `<div class="quote"><div class="quotedText">${fixedstr.slice(
+                3
+            )}</div></div>`
+        );
     });
     // 太字
     content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
@@ -325,15 +335,18 @@ const generateContentHTML = (
                 )}</a>`
             );
         });
-    }
-    else {
+    } else {
         // 通常メッセージのリンク
-        content.match(/https?:\/\/\S+/g)?.forEach((str) => {
-            content = content.replace(
-                str,
-                `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
-            );
-        });
+        content
+            .match(
+                /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g
+            )
+            ?.forEach((str) => {
+                content = content.replace(
+                    str,
+                    `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
+                );
+            });
     }
     // 改行処理
     content = content.replaceAll("\n", "<br>");
