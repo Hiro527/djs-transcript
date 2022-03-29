@@ -311,15 +311,16 @@ const generateContentHTML = (
     });
     // リンク
     if (embed) {
-        // Issue: #2 (https://github.com/Hiro527/djs-transcript/issues/2)
-        /* 
-        content.match(/  /g)?.forEach((str) => {
-            content = content.replace(
-                str,
-                `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
-            );
-        });
-        */
+        content
+            .match(
+                /(?<!\[.+\]\()https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g
+            )
+            ?.forEach((str) => {
+                content = content.replace(
+                    str,
+                    `<a class="noDeco" href=${str} target="_blank" rel="noopener noreferrer">${str}</a>`
+                );
+            });
         // md記法のリンク
         content.match(/\[[\S\s]*?\]\([\S\s]*?\)/g)?.forEach((str) => {
             const label = str.match(/\[[\S\s]*?\]/g)!;
