@@ -18,7 +18,7 @@ export const transcript = async (
     locale?: string
 ) => {
     const lastMessage = Array.from(await channel.messages.fetch({ limit: 1 }))[0];
-    if (lastMessage[0]) {
+    if (!lastMessage[0]) {
         throw Error(`The channel you specified has no messages to transcript.`);
     }
     const fname = path.join(fpath, `${v4()}.html`);
