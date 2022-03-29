@@ -225,8 +225,8 @@ export const getHtml = async (
 };
 
 // Hexcolorを任意の透明度でrgba形式に変換する
-const rgba = (hexcolor: string, opacity: number) => {
-    if (hexcolor.length !== 7) {
+const rgba = (hexcolor: string | undefined, opacity: number) => {
+    if (!hexcolor || hexcolor.length !== 7) {
         return null;
     }
     const red = parseInt(hexcolor.slice(1, -4), 16);
