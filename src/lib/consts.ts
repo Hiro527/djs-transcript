@@ -153,6 +153,7 @@ export const Base = `<!DOCTYPE html>
             }
             .embedThumbnail {
                 max-height: 80px;
+                max-width: 140px;
             }
             .spoiler {
                 background-color: #5f5f5f;
@@ -234,6 +235,7 @@ export const Message = `<div class="message">
     </div>
 </div>`;
 export const Image = `<img class="attachmentImage" src="%IMAGE_URL%">`;
+export const Video = `<video controls width="600" style="display:block"><source src="%VIDEO_URL%" type="video/%VIDEO_TYPE%"></video>`
 export const File = `<div class="attachmentFile">
     <div class="fileName">%FILE_NAME%</div>
     <div class="fileSize">%FILE_SIZE%</div>

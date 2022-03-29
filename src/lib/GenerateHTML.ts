@@ -198,6 +198,21 @@ export const getHtml = async (
             } else {
                 EmbedBase = EmbedBase.replace("%EMBED_THUMBNAIL%", "");
             }
+            if (embed.type === "image") {
+                Images += consts.Image.replace(
+                    "%IMAGE_URL%",
+                    embed.thumbnail!.url
+                );
+                EmbedBase = "";
+            } else if (embed.type === "video") {
+                const parsedUrl = embed.video?.url?.split(".")!;
+                const videotype = parsedUrl[parsedUrl?.length - 1];
+                Images += consts.Video.replace(
+                    "%VIDEO_URL%",
+                    embed.video?.url!
+                ).replace("%VIDEO_TYPE%", videotype);
+                EmbedBase = "";
+            }
             Embeds += EmbedBase;
         });
         MessageHTML = MessageHTML.replace("%EMBEDS%", Embeds);
