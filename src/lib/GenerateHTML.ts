@@ -2,7 +2,6 @@ import {
     Guild,
     Message,
     NewsChannel,
-    TextBasedChannel,
     TextChannel,
 } from "discord.js";
 import dayjs from "dayjs";

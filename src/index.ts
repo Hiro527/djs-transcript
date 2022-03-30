@@ -1,6 +1,5 @@
 import {
     AnyChannel,
-    Channel,
     Client,
     Message,
     NewsChannel,
@@ -13,10 +12,13 @@ import { getHtml } from "./lib/GenerateHTML";
 
 export const transcript = async (
     client: Client,
-    channel: TextChannel | NewsChannel,
+    channel: AnyChannel,
     fpath: string,
     locale?: string
 ) => {
+    if (!(channel instanceof TextChannel || channel instanceof NewsChannel)) {
+        return;
+    }
     const lastMessage = Array.from(await channel.messages.fetch({ limit: 1 }))[0];
     if (!lastMessage[0]) {
         throw Error(`The channel you specified has no messages to transcript.`);
