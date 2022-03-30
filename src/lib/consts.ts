@@ -164,6 +164,9 @@ export const Base = `<!DOCTYPE html>
             .bold {
                 font-weight: bold;
             }
+            .italic {
+                font-style: italic;
+            }
             .underline {
                 text-decoration: underline;
             }
