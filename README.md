@@ -14,33 +14,50 @@ Sample Page: https://hiro527.jp/djs-transcript/sample.html
 
  このライブラリは現在開発段階です。未知のバグやその他の問題を引き起こす可能性が十分あるため、常にアップデートに気を配っておいてください。可能な限り早急なバグ修正に取り掛かりますが、開発者が学生であるため時間がなかなか取れない場合があることをご了承ください。
 
-# v0.4.0
-- Fixed an issue that it throws an error when last message was deleted. / 最後に送信されたメッセージが削除された場合に出るエラーを修正しました。
-- Fixed some styles for embeds. / embedのスタイルを修正しました。
-- Now, all timestamps are compatible with I18n. / すべてのタイムスタンプをI18nに対応しました。
-- Unix Timestamp is supported. / Unixタイムスタンプに対応しました。
-- Deleted user/channel/role are supported. / 削除されたユーザー/チャンネル/ロールの表示に対応しました。
-- Fixed an issue that url in embeds hadn't shown as hyper link. / embed内のurlがハイパーリンクとして表示されない問題を修正しました。
-- Fixed an issue that markdown in fields hadn't been parsed. / field無いのマークダウンがパースされていない問題を修正しました。
+# v1.0.0
+- Quote and italic are supported. / 引用と斜体に対応しました。
+- Fixed an issue where both color of code block and embed are same. / Embedとコードブロックで背景色が被っている問題を修正しました。
 
-# Usage / 使い方
+# Code Example / コード例
 ## JavaScript
 ```js
+const Discord = require('discord.js');
 const { transcript } = require('djs-transcript');
-/* Discord.js Client Initialization*/
-const filePath = await transcript(client, channel, 'Path-To-Output', 'Locale');
-// transcript() will return the path to file
+
+const client = new Discord.Client({
+    intents: Discord.Intents.FLAGS.GUILDS | Discord.Intents.FLAGS.GUILD_MESSAGES | Discord.Intents.FLAGS.GUILD_MEMBERS
+});
+
+client.on('ready', async () => {
+    console.log('Ready')
+    const channel = client.channels.cache.get('ChannelID');
+    const path = await transcript(client, channel, 'C:\\Users\\User\\Documents\\Discord', 'en');
+    console.log(path);
+})
+
+client.login('DISCORD_TOKEN');
 ```
 
 ## TypeScript
 ```ts
-import { transcript } from 'djs-transcript';
-/* Discord.js Client Initialization*/
-const filePath = await transcript(client, channel, 'Path-To-Output', 'Locale');
-// transcript() will return the path to file
+import { Client } from 'discord.js';
+import transcript from 'djs-transcript';
+
+const client = new Client({
+    intents: Discord.Intents.FLAGS.GUILDS | Discord.Intents.FLAGS.GUILD_MESSAGES | Discord.Intents.FLAGS.GUILD_MEMBERS
+});
+
+client.on('ready', async () => {
+    console.log('Ready')
+    const channel = client.channels.cache.get('ChannelID');
+    const path = await transcript(client, channel, 'C:\\Users\\User\\Documents\\Discord', 'en');
+    console.log(path);
+})
+
+client.login('DISCORD_TOKEN');
 ```
-- `client` must be ready. / `client`はready状態である必要があります。
-- `Locale` must be Unicode Locale Identifier. / `Locale`はUnicodeロケール識別子である必要があります。
+
+- Locale must be Unicode Locale Identifier. / 指定するロケールはUnicodeロケール識別子である必要があります。
 - `Path-To-Output` should be full path. / `Path-to-Output`はフルパスを指定することをおすすめします。
 
 # Contact / コンタクト
