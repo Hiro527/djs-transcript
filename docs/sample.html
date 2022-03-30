@@ -1,347 +1,425 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>バックヤード - djs-transcript</title>
-        <style>
-            body {
-                background-color: #2C2F33;
-                color: #FFFFFF;
-                padding-top: 80px;
-            }
-            header {
-                left: 0px;
-                top: 0px;
-                height: 80px;
-                display: flex;
-                position: fixed;
-                align-items: center;
-                width: 100%;
-                background-color: #23272A;
-            }
-            #serverIcon {
-                height: 60px;
-                border-radius: 50%;
-                margin: 10px;
-            }
-            #headerTimestamp {
-                margin-left: 15px;
-                color: rgba(255, 255, 255, 0.4);
-            }
-            .message {
-                display: flex;
-                align-items: flex-start;
-                margin: 5px;
-                margin-bottom: 20px;
-                width: 100%;
-                height: auto;
-            }
-            .avatar {
-                height: 40px;
-                border-radius: 50%;
-                animation-play-state: paused;
-            }
-            .content {
-                margin-left: 10px;
-                display: flex;
-                flex-direction: column;
-            }
-            .msgTimestamp {
-                color: rgba(255, 255, 255, 0.4);
-                font-size: 13px;
-            }
-            .attachmentImage {
-                width: max(30%, 300px);
-                border-radius: 5px;
-                margin-top: 10px;
-            }
-            .attachmentFile {
-                margin-top: 10px;
-                display: flex;
-                align-items: center;
-                width: 500px;
-                height: 50px;
-                border-radius: 5px;
-                background-color: #23272A;
-                border: rgba(0, 0, 0, 0.4) solid 1px;
-            }
-            .attachmentFile .fileName {
-                margin-left: 10px;
-                max-width: 150px;
-                overflow: hidden;
-                white-space: nowrap;
-            }
-            .attachmentFile .fileSize {
-                margin-left: 10px;
-                color: rgba(255, 255, 255, 0.4);
-                font-size: 13px;
-            }
-            .attachmentFile .downloadBtn {
-                margin-left: auto;
-                margin-right: 10px;
-            }
-            .attachmentFile a {
-                color: rgba(255, 255, 255, 0.4);
-            }
-            .attachmentFile a:hover {
-                color: rgb(255, 255, 255);
-            }
-            .embed {
-                margin-top: 10px;
-                background-color: #23272A;
-                width: 650px;
-                font-size: 12px;
-                border-radius: 4px;
-            }
-            .embedContent {
-                display: flex;
-                margin: 15px;
-            }
-            .embedAuthor {
-                display: flex;
-                align-items: center;
-            }
-            .embedAuthorAvatar {
-                width: 25px;
-                border-radius: 50%;
-            }
-            .embedAuthorName {
-                font-size: 14px;
-                margin-left: 10px;
-                font-weight: bold;
-                margin-bottom: 10px
-            }
-            .embedTitle {
-                font-size: 16px;
-                font-weight: bold;
-            }
-            .embedDesc {
-                margin-top: 10px;
-            }
-            .embedRegField {
-                margin-top: 10px;
-            }
-            .embedFieldTitle {
-                color: rgba(255, 255, 255, 0.6);
-            }
-            .embedInlineFieldHolder {
-                margin-top: 10px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-            }
-            .embedInlineField {
-                width: 180px;
-            }
-            .embedImage {
-                max-width: 450px;
-                margin-top: 10px;
-            }
-            .embedFooter {
-                margin-top: 10px;
-                display: flex;
-                align-items: center;
-            }
-            .embedFooterImage {
-                width: 15px;
-                border-radius: 50%;
-            }
-            .embedFooterText {
-                margin-left: 7px;
-                color: rgba(255, 255, 255, 0.6);
-                font-size: 10px;
-            }
-            .embedThumbnail {
-                max-height: 80px;
-            }
-            .spoiler {
-                background-color: #5f5f5f;
-            }
-            .strike {
-                text-decoration: line-through;
-            }
-            .bold {
-                font-weight: bold;
-            }
-            .highlight {
-                padding-left: 3px;
-                padding-right: 3px;
-                border-radius: 4px;
-            }
-            .codeB {
-                margin-top: 5px;
-                margin-bottom: 5px;
-                padding: 7px;
-                background-color: #23272A;
-                border: rgba(0, 0, 0, 0.4) solid 1px;
-                border-radius: 5px;
-                width: 600px;
-                font-family: monospace;
-            }
-            .codeL {
-                background-color: #23272A;
-                padding: 5px;
-                border-radius: 3px;
-                font-family: monospace;
-            }
-            .noDeco {
-                text-decoration: none;
-            }
-            .quote {
-                margin-top: 5px;
-                margin-bottom: 5px;
-                padding-top: 2px;
-                padding-bottom: 2px;
-                border-radius: 2.5px;
-                border-left: rgba(141, 141, 141, 0.5) solid 5px;
-            }
-            .quotedText {
-                margin-left: 10px;
-            }
-            a:link, a:visited, a:hover, a:active {
-                color: #00b0f4;
-            }
-            a:hover {
-                text-decoration: underline;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <img id="serverIcon" src="https://cdn.discordapp.com/icons/698690249571958835/efe15eeca3fa041de093a4343b9af92a.webp">
-            <h1>バックヤード - djs-transcript</h1>
-            <div id="headerTimestamp">2022/3/27 1:48:31</div>
-        </header>
-        <div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:04:00 Edited at 2022/3/24 21:06:51</span>
-        </div>
-        <div class="messageContent">
-            Standard Style
-        </div>
-        
-        
-        
-    </div>
-</div><div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:06:27 Edited at 2022/3/24 21:18:02</span>
-        </div>
-        <div class="messageContent">
-            <span class="bold">Bold</span><br><span class="spoiler">Spoiler</span><br><span class="strike">Strikethrough</span><div class="quote"><div class="quotedText">QuotedText</div></div>
-        </div>
-        
-        
-        
-    </div>
-</div><div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:06:35 Edited at 2022/3/24 21:59:21</span>
-        </div>
-        <div class="messageContent">
-            User Ping: <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@nullA1m</span> <br>Role Ping: <span class="highlight" style="background-color:rgba(233, 30, 99, 0.4)">@Sample Role 1</span> <span class="highlight" style="background-color:rgba(46, 204, 113, 0.4)">@Sample Role 2</span><br>Channel: <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">#djs-transcript</span> <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">🔊djs-transcript</span>
-        </div>
-        
-        
-        
-    </div>
-</div><div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:07:30 Edited at 2022/3/24 22:00:26</span>
-        </div>
-        <div class="messageContent">
-            <span class="codeL">Code Line</span><br><div class="codeB">Code Block<br>Code Block<br>Code Block<br></div>
-        </div>
-        
-        
-        
-    </div>
-</div><div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:07:51</span>
-        </div>
-        <div class="messageContent">
-            All Embeds are Supported<br><a class="noDeco" href=https://twitter.com/nullA1m target="_blank" rel="noopener noreferrer">https://twitter.com/nullA1m</a>
-        </div>
-        <div class="embed" style="border-left: #1da1f2 solid 4px;">
-    <div class="embedContent">
-        <div class="embedContentMain">
-            <div class="embedTitle">
-    <a class="noDeco" href="https://twitter.com/nullA1m" target="_blank" rel="noopener noreferrer">ぬるえいむ (@nullA1m)</a>
-</div><div class="embedDesc">
-    なんちゃって灰色プログラマー | @TIMPKrunker | 生放送 <a class="noDeco" href=https://t.co/kITgKg4VjX target="_blank" rel="noopener noreferrer">https://t.co/kITgKg4VjX</a> | Discord <a class="noDeco" href=https://t.co/I12lA3KJgX target="_blank" rel="noopener noreferrer">https://t.co/I12lA3KJgX</a> | 推し絵師さん @1kurusk @obktof | ♡ @Vspo77
-</div>
-<div class="embedInlineFieldHolder">
-    <div class="embedInlineField">
-    <div class="embedFieldTitle">
-        Followers
-    </div>
-    <div class="embedFieldValue">
-        781
-    </div>
-</div>
-<div class="embedInlineField">
-    <div class="embedFieldTitle">
-        Tweets
-    </div>
-    <div class="embedFieldValue">
-        24162
-    </div>
-</div>
 
-</div>
-<div class="embedFooter">
-    <img class="embedFooterImage" src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png">
-    <div class="embedFooterText">Twitter</div>
-</div>
-        </div>
-        <img class="embedThumbnail" src="https://pbs.twimg.com/profile_images/1500365908027777025/JVArly4Q_400x400.jpg">
-    </div>
-</div>
+<head>
+    <meta charset="utf-8">
+    <title>バックヤード - djs-transcript</title>
+    <style>
+        body {
+            background-color: #2C2F33;
+            color: #FFFFFF;
+            padding-top: 80px;
+        }
 
-        
-        
+        header {
+            left: 0px;
+            top: 0px;
+            height: 80px;
+            display: flex;
+            position: fixed;
+            align-items: center;
+            width: 100%;
+            background-color: #23272A;
+        }
+
+        #serverIcon {
+            height: 60px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+
+        #headerTimestamp {
+            margin-left: 15px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin: 5px;
+            margin-bottom: 20px;
+            width: 100%;
+            height: auto;
+        }
+
+        .avatar {
+            height: 40px;
+            border-radius: 50%;
+            animation-play-state: paused;
+        }
+
+        .content {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msgTimestamp {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .attachmentImage {
+            width: max(30%, 300px);
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .attachmentFile {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            width: 500px;
+            height: 50px;
+            border-radius: 5px;
+            background-color: #23272A;
+            border: rgba(0, 0, 0, 0.4) solid 1px;
+        }
+
+        .attachmentFile .fileName {
+            margin-left: 10px;
+            max-width: 150px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .attachmentFile .fileSize {
+            margin-left: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .attachmentFile .downloadBtn {
+            margin-left: auto;
+            margin-right: 10px;
+        }
+
+        .attachmentFile a {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .attachmentFile a:hover {
+            color: rgb(255, 255, 255);
+        }
+
+        .embed {
+            margin-top: 10px;
+            background-color: #23272A;
+            width: 650px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .embedContent {
+            display: flex;
+            margin: 15px;
+        }
+
+        .embedAuthor {
+            display: flex;
+            align-items: center;
+        }
+
+        .embedAuthorAvatar {
+            width: 25px;
+            border-radius: 50%;
+        }
+
+        .embedAuthorName {
+            font-size: 14px;
+            margin-left: 10px;
+            font-weight: bold;
+            margin-bottom: 10px
+        }
+
+        .embedTitle {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .embedDesc {
+            margin-top: 10px;
+        }
+
+        .embedRegField {
+            margin-top: 10px;
+        }
+
+        .embedFieldTitle {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .embedInlineFieldHolder {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .embedInlineField {
+            width: 180px;
+        }
+
+        .embedImage {
+            max-width: 450px;
+            margin-top: 10px;
+        }
+
+        .embedFooter {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .embedFooterImage {
+            width: 15px;
+            border-radius: 50%;
+        }
+
+        .embedFooterText {
+            margin-left: 7px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+        }
+
+        .embedThumbnail {
+            max-height: 80px;
+            max-width: 140px;
+        }
+
+        .spoiler {
+            background-color: #5f5f5f;
+        }
+
+        .strike {
+            text-decoration: line-through;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+
+        .highlight {
+            font-weight: normal;
+            padding-left: 3px;
+            padding-right: 3px;
+            border-radius: 4px;
+        }
+
+        .codeB {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding: 7px;
+            background-color: #23272A;
+            border: rgba(0, 0, 0, 0.4) solid 1px;
+            border-radius: 5px;
+            width: 600px;
+            font-family: monospace;
+        }
+
+        .codeL {
+            background-color: #23272A;
+            padding: 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .codeBe {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding: 7px;
+            background-color: #111314;
+            border: rgba(0, 0, 0, 0.4) solid 1px;
+            border-radius: 5px;
+            width: 600px;
+            font-family: monospace;
+        }
+
+        .codeLe {
+            background-color: #111314;
+            padding: 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .noDeco {
+            text-decoration: none;
+        }
+
+        .quote {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            border-radius: 2.5px;
+            border-left: rgba(141, 141, 141, 0.5) solid 5px;
+        }
+
+        .quotedText {
+            margin-left: 10px;
+        }
+
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: #00b0f4;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img id="serverIcon"
+            src="https://cdn.discordapp.com/icons/698690249571958835/efe15eeca3fa041de093a4343b9af92a.webp">
+        <h1>バックヤード - djs-transcript</h1>
+        <div id="headerTimestamp">03/30/2022 7:06:43 PM</div>
+    </header>
+    <div class="message">
+        <img class="avatar"
+            src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+        <div class="content">
+            <div class="info">
+                nullA1m#7777 <span class="msgTimestamp">03/24/2022 9:06:27 PM Edited at 03/30/2022 6:26:48 PM</span>
+            </div>
+            <div class="messageContent">
+                Standard Style<br><span class="bold italic">Bold</span><br><span class="italic">Italic</span><br><span
+                    class="spoiler">Spoiler</span><br><span class="strike">Strikethrough</span>
+                <div class="quote">
+                    <div class="quotedText">QuotedText</div>
+                </div>
+            </div>
+        </div>
     </div>
-</div><div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:08:30</span>
+    <div class="message">
+        <img class="avatar"
+            src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+        <div class="content">
+            <div class="info">
+                nullA1m#7777 <span class="msgTimestamp">03/24/2022 9:06:35 PM Edited at 03/30/2022 7:05:50 PM</span>
+            </div>
+            <div class="messageContent">
+                User Ping: <span class="highlight" style="background-color:rgba(79, 110, 223, 0.4)">@nullA1m</span>
+                <br>Role Ping: <span class="highlight" style="background-color:rgba(233, 30, 99, 0.4)">@Sample Role
+                    1</span> <span class="highlight" style="background-color:rgba(46, 204, 113, 0.4)">@Sample Role
+                    2</span><br>Channel: <span class="highlight"
+                    style="background-color:rgba(79, 110, 223, 0.4)">#djs-transcript</span> <span class="highlight"
+                    style="background-color:rgba(79, 110, 223, 0.4)">🔊djs-transcript</span><br>Timestamp: <div
+                    class="spoiler" style="display:inline-block">Wednesday, March 30, 2022 7:05 PM</div>
+            </div>
         </div>
-        <div class="messageContent">
-            
-        </div>
-        
-        <img class="attachmentImage" src="https://cdn.discordapp.com/attachments/956522555383111700/956524912183500881/unknown.png">
-        
     </div>
-</div><div class="message">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
-    <div class="content">
-        <div class="info">
-            nullA1m#7777 <span class="msgTimestamp">2022/3/24 21:09:11</span>
+    <div class="message">
+        <img class="avatar"
+            src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+        <div class="content">
+            <div class="info">
+                nullA1m#7777 <span class="msgTimestamp">03/24/2022 9:07:30 PM Edited at 03/30/2022 6:27:30 PM</span>
+            </div>
+            <div class="messageContent">
+                <span class="codeL">Code Line</span><br>
+                <div class="codeB">**Code Block**<br>**Code Block**<br>~~Code Block~~<br></div>
+            </div>
         </div>
-        <div class="messageContent">
-            
-        </div>
-        
-        
-        <div class="attachmentFile">
-    <div class="fileName">README.md</div>
-    <div class="fileSize">1.06KB</div>
-    <div class="downloadBtn"><a class="noDeco" href="https://cdn.discordapp.com/attachments/956522555383111700/956525084472909864/README.md" target="_blank" rel="noopener noreferrer">Download</a></div>
-</div>
     </div>
-</div>
-    </body>
+    <div class="message">
+        <img class="avatar"
+            src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+        <div class="content">
+            <div class="info">
+                nullA1m#7777 <span class="msgTimestamp">03/24/2022 9:07:51 PM</span>
+            </div>
+            <div class="messageContent">
+                All Embeds are Supported<br><a class="noDeco" href=https://twitter.com/nullA1m target="_blank"
+                    rel="noopener noreferrer">https://twitter.com/nullA1m</a>
+            </div>
+            <div class="embed" style="border-left: #1da1f2 solid 4px;">
+                <div class="embedContent">
+                    <div class="embedContentMain">
+                        <div class="embedTitle">
+                            <a class="noDeco" href="https://twitter.com/nullA1m" target="_blank"
+                                rel="noopener noreferrer">ぬるえいむ (@nullA1m)</a>
+                        </div>
+                        <div class="embedDesc">
+                            なんちゃって灰色プログラマー | @TIMPKrunker | 生放送 <a class="noDeco" href=https://t.co/kITgKg4VjX
+                                target="_blank" rel="noopener noreferrer">https://t.co/kITgKg4VjX</a> | Discord <a
+                                class="noDeco" href=https://t.co/I12lA3KJgX target="_blank"
+                                rel="noopener noreferrer">https://t.co/I12lA3KJgX</a> | 推し絵師さん @1kurusk @obktof | ♡
+                            @Vspo77
+                        </div>
+                        <div class="embedInlineFieldHolder">
+                            <div class="embedInlineField">
+                                <div class="embedFieldTitle">
+                                    Followers
+                                </div>
+                                <div class="embedFieldValue">
+                                    781
+                                </div>
+                            </div>
+                            <div class="embedInlineField">
+                                <div class="embedFieldTitle">
+                                    Tweets
+                                </div>
+                                <div class="embedFieldValue">
+                                    24162
+                                </div>
+                            </div>
+                        </div>
+                        <div class="embedFooter">
+                            <img class="embedFooterImage"
+                                src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png">
+                            <div class="embedFooterText">Twitter</div>
+                        </div>
+                    </div>
+                    <img class="embedThumbnail"
+                        src="https://pbs.twimg.com/profile_images/1500365908027777025/JVArly4Q_400x400.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="message">
+        <img class="avatar"
+            src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+        <div class="content">
+            <div class="info">
+                nullA1m#7777 <span class="msgTimestamp">03/24/2022 9:08:30 PM</span>
+            </div>
+            <div class="messageContent">
+            </div>
+            <img class="attachmentImage"
+                src="https://cdn.discordapp.com/attachments/956522555383111700/956524912183500881/unknown.png">
+        </div>
+    </div>
+    <div class="message">
+        <img class="avatar"
+            src="https://cdn.discordapp.com/avatars/680343744423395329/a_d116959afbcc14f77d0aacb108340483.webp">
+        <div class="content">
+            <div class="info">
+                nullA1m#7777 <span class="msgTimestamp">03/24/2022 9:09:11 PM</span>
+            </div>
+            <div class="messageContent">
+            </div>
+            <div class="attachmentFile">
+                <div class="fileName">README.md</div>
+                <div class="fileSize">1.06KB</div>
+                <div class="downloadBtn"><a class="noDeco"
+                        href="https://cdn.discordapp.com/attachments/956522555383111700/956525084472909864/README.md"
+                        target="_blank" rel="noopener noreferrer">Download</a></div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
