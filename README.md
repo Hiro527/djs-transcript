@@ -31,7 +31,7 @@ const client = new Discord.Client({
 client.on('ready', async () => {
     console.log('Ready')
     const channel = client.channels.cache.get('ChannelID');
-    const path = await transcript(client, channel, 'C:\\Users\\User\\Documents\\Discord', 'en');
+    const path = await transcript(client, channel, 'Path-to-output-directory', 'en');
     console.log(path);
 })
 
@@ -50,7 +50,7 @@ const client = new Client({
 client.on('ready', async () => {
     console.log('Ready')
     const channel = client.channels.cache.get('ChannelID');
-    const path = await transcript(client, channel, 'C:\\Users\\User\\Documents\\Discord', 'en');
+    const path = await transcript(client, channel, 'Path-to-output-directory', 'en');
     console.log(path);
 })
 
