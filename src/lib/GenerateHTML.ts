@@ -94,7 +94,7 @@ export const getHtml = async (
             if (embed.description) {
                 MainContent += consts.EmbedDesc.replace(
                     "%EMBED_DESC%",
-                    generateContentHTML(guild, embed.description, locale, false)
+                    generateContentHTML(guild, embed.description, locale, true)
                 );
             }
             let RegularFields = "";
@@ -109,7 +109,7 @@ export const getHtml = async (
                                 guild,
                                 field.name,
                                 locale,
-                                false
+                                true
                             )
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
@@ -117,7 +117,7 @@ export const getHtml = async (
                                 guild,
                                 field.value,
                                 locale,
-                                false
+                                true
                             )
                         );
                     } else {
@@ -127,7 +127,7 @@ export const getHtml = async (
                                 guild,
                                 field.name,
                                 locale,
-                                false
+                                true
                             )
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
@@ -135,7 +135,7 @@ export const getHtml = async (
                                 guild,
                                 field.value,
                                 locale,
-                                false
+                                true
                             )
                         );
                     }
