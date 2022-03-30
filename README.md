@@ -40,11 +40,11 @@ client.login('DISCORD_TOKEN');
 
 ## TypeScript
 ```ts
-import { Client } from 'discord.js';
+import { Client, Intents } from 'discord.js';
 import transcript from 'djs-transcript';
 
 const client = new Client({
-    intents: Discord.Intents.FLAGS.GUILDS | Discord.Intents.FLAGS.GUILD_MESSAGES | Discord.Intents.FLAGS.GUILD_MEMBERS
+    intents: Intents.FLAGS.GUILDS | Intents.FLAGS.GUILD_MESSAGES | Intents.FLAGS.GUILD_MEMBERS
 });
 
 client.on('ready', async () => {
