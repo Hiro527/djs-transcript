@@ -23,7 +23,7 @@
     "bugs": {
         "url": "https://github.com/Hiro527/djs-transcript/issues"
     },
-    "homepage": "https://github.com/Hiro527/djs-transcript#readme",
+    "homepage": "https://hiro527.gitbook.io/djs-transcript-guide/",
     "dependencies": {
         "dayjs": "^1.11.0",
         "discord.js": "^13.6.0",
