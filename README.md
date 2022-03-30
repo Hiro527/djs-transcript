@@ -18,6 +18,15 @@ Sample Page: https://hiro527.jp/djs-transcript/sample.html
 - Quote and italic are supported. / 引用と斜体に対応しました。
 - Fixed an issue where both color of code block and embed are same. / Embedとコードブロックで背景色が被っている問題を修正しました。
 
+# Requirements / 必要事項
+- Node.js: >= 16.6.0
+- Discord.js: >= 13.0.0
+
+# Installation / インストール方法
+```bash
+npm i djs-transcript
+```
+
 # Code Example / コード例
 ## JavaScript
 ```js
