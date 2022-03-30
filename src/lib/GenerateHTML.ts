@@ -252,6 +252,32 @@ const generateContentHTML = (
     locale?: string,
     embed?: Boolean
 ) => {
+    let codeB: string[] = [];
+    let index = 0;
+    // コードブロック退避処理
+    content.match(/```[\s\S]*```/g)?.forEach((str) => {
+        let startIndex = 3;
+        if (str.match(/^```.+\n/)) {
+            startIndex = str.match(/^```.+\n/)![0].length;
+        } else if (str.match(/^```\n/)) {
+            startIndex = 4;
+        }
+        codeB.push(str.slice(startIndex, -3));
+        content = content.replace(
+            str,
+            `<div class="codeB${embed ? "e" : ""}">%EMBEDCODEB${index}%</div>`
+        );
+        index++;
+    });
+    // コードライン退避処理
+    content.match(/`[\s\S]*`/g)?.forEach((str) => {
+        codeB.push(str.slice(1, -1));
+        content = content.replace(
+            str,
+            `<span class="codeL${embed ? "e" : ""}">%EMBEDCODEB${index}%</span>`
+        );
+        index++;
+    });
     // ユーザーメンション
     content.match(/<@![0-9]{17,19}>/g)?.forEach((str) => {
         content = content.replace(
@@ -360,11 +386,25 @@ const generateContentHTML = (
             )}</div></div>`
         );
     });
+    // 太字+車体
+    content.match(/\*\*\*[\s\S]*?\*\*\*/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="bold italic">${str.slice(2, -2)}</span>`
+        );
+    });
     // 太字
     content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<span class="bold">${str.slice(2, -2)}</span>`
+            `<span class="bold">${str.slice(1, -1)}</span>`
+        );
+    });
+    // 斜体
+    content.match(/(\*|_)[\s\S]*?(\*|_)/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="italic">${str.slice(1, -1)}</span>`
         );
     });
     // スポイラー
@@ -386,26 +426,6 @@ const generateContentHTML = (
         content = content.replace(
             str,
             `<span class="underline">${str.slice(2, -2)}</span>`
-        );
-    });
-    // コードブロック
-    content.match(/```[\s\S]*```/g)?.forEach((str) => {
-        let startIndex = 3;
-        if (str.match(/^```.+\n/)) {
-            startIndex = str.match(/^```.+\n/)![0].length;
-        } else if (str.match(/^```\n/)) {
-            startIndex = 4;
-        }
-        content = content.replace(
-            str,
-            `<div class="codeB${embed ? 'e' : ''}">${str.slice(startIndex, -3)}</div>`
-        );
-    });
-    // コードライン
-    content.match(/`[\s\S]*`/g)?.forEach((str) => {
-        content = content.replace(
-            str,
-            `<span class="codeL${embed ? 'e' : ''}">${str.slice(1, -1)}</span>`
         );
     });
     // リンク
@@ -448,6 +468,12 @@ const generateContentHTML = (
                 );
             });
     }
+    // コードブロック復元処理
+    index = 0;
+    codeB.forEach((str) => {
+        content = content.replace(`%EMBEDCODEB${index}%`, str);
+        index++;
+    });
     // 改行処理
     content = content.replaceAll("\n", "<br>");
     return content;
