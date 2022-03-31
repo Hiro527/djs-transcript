@@ -136,7 +136,8 @@ export const Base = `<!DOCTYPE html>
                 justify-content: flex-start;
             }
             .embedInlineField {
-                width: 180px;
+                max-width: 180px;
+                min-width: 155px;
             }
             .embedImage {
                 max-width: 450px;
