@@ -150,7 +150,7 @@ export const getHtml = async (
                         )
                     );
                 } else {
-                    Footer = Footer.replace("%EMBED_FOOTER_IMAGE_URL%", "");
+                    Footer = Footer.replace("%EMBED_FOOTER_IMAGE%", "");
                 }
                 Footer = Footer.replace(
                     "%EMBED_FOOTER_TEXT%",
