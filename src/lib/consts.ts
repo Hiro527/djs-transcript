@@ -243,6 +243,13 @@ export const Base = `<!DOCTYPE html>
             <h1>%SERVER% - %CHANNEL_NAME%</h1>
             <div id="headerTimestamp">%TRANSCRIPT_TIMESTAMP%</div>
         </header>
+        <script type="text/javascript">
+        window.onload = () => {
+            let element = document.documentElement;
+            let bottom = element.scrollHeight - element.clientHeight;
+            window.scroll(0, bottom);
+        }
+        </script>
         %CONTENTS%
     </body>
 </html>`;
