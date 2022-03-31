@@ -1,9 +1,4 @@
-import {
-    Guild,
-    Message,
-    NewsChannel,
-    TextChannel,
-} from "discord.js";
+import { Guild, Message, NewsChannel, TextChannel } from "discord.js";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import RelativeTime from "dayjs/plugin/relativeTime";
@@ -73,13 +68,15 @@ export const getHtml = async (
             );
             if (embed.author) {
                 MainContent += consts.EmbedAuthor.replace(
-                    "%EMBED_AUTHOR_AVATAR_URL%",
-                    embed.author.iconURL || ""
+                    "%EMBED_AUTHOR_AVATAR%",
+                    embed.author.iconURL
+                        ? `<img class="embedAuthorAvatar" src="${embed.author.iconURL}">`
+                        : ""
                 ).replace(
                     "%EMBED_AUTHOR_NAME%",
                     embed.author.url
-                        ? `<a class="noDeco" style="color:inherit" href="${embed.author.url}" target="_blank" rel="noopener noreferrer">${embed.author.name}</a>`
-                        : embed.author.name
+                        ? `<div class="embedAuthorName"><a class="noDeco" style="color:inherit" href="${embed.author.url}" target="_blank" rel="noopener noreferrer">${embed.author.name}</a></div>`
+                        : `<div class="embedAuthorName">${embed.author.name}</div>`
                 );
             }
             if (embed.title) {
@@ -104,12 +101,7 @@ export const getHtml = async (
                     if (field.inline) {
                         InlineFields += consts.EmbedInlineField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            generateContentHTML(
-                                guild,
-                                field.name,
-                                locale,
-                                true
-                            )
+                            generateContentHTML(guild, field.name, locale, true)
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
                             generateContentHTML(
@@ -122,12 +114,7 @@ export const getHtml = async (
                     } else {
                         RegularFields += consts.EmbedRegularField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            generateContentHTML(
-                                guild,
-                                field.name,
-                                locale,
-                                true
-                            )
+                            generateContentHTML(guild, field.name, locale, true)
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
                             generateContentHTML(
@@ -254,7 +241,7 @@ const generateContentHTML = (
     let codeB: string[] = [];
     let index = 0;
     // コードブロック退避処理
-    content.match(/```[\s\S]*```/g)?.forEach((str) => {
+    content.match(/```[\s\S]*?```/g)?.forEach((str) => {
         let startIndex = 3;
         if (str.match(/^```.+\n/)) {
             startIndex = str.match(/^```.+\n/)![0].length;
@@ -269,7 +256,7 @@ const generateContentHTML = (
         index++;
     });
     // コードライン退避処理
-    content.match(/`[\s\S]*`/g)?.forEach((str) => {
+    content.match(/`[\s\S]*?`/g)?.forEach((str) => {
         codeB.push(str.slice(1, -1));
         content = content.replace(
             str,
@@ -326,10 +313,10 @@ const generateContentHTML = (
     // タイムスタンプ
     content.match(/<t:[0-9]{1,20}(:(t|T|d|D|f|F|R))?>/g)?.forEach((str) => {
         const timestamp = Number(str.match(/[0-9]{1,20}/g)![0]) * 1000;
-        const mode = str.match(/(t|T|d|D|f|F|R)(?=>)/g)![0];
+        const mode = str.match(/(t|T|d|D|f|F|R)(?=>)/g) || ["f"];
         const day = dayjs(timestamp);
         let timestampText = "";
-        switch (mode) {
+        switch (mode[0]) {
             case "t":
                 timestampText = day.format("LT");
                 break;
@@ -385,7 +372,7 @@ const generateContentHTML = (
             )}</div></div>`
         );
     });
-    // 太字+車体
+    // 太字+斜体
     content.match(/\*\*\*[\s\S]*?\*\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
@@ -396,14 +383,7 @@ const generateContentHTML = (
     content.match(/\*\*[\s\S]*?\*\*/g)?.forEach((str) => {
         content = content.replace(
             str,
-            `<span class="bold">${str.slice(1, -1)}</span>`
-        );
-    });
-    // 斜体
-    content.match(/(\*|_)[\s\S]*?(\*|_)/g)?.forEach((str) => {
-        content = content.replace(
-            str,
-            `<span class="italic">${str.slice(1, -1)}</span>`
+            `<span class="bold">${str.slice(2, -2)}</span>`
         );
     });
     // スポイラー
@@ -425,6 +405,13 @@ const generateContentHTML = (
         content = content.replace(
             str,
             `<span class="underline">${str.slice(2, -2)}</span>`
+        );
+    });
+    // 斜体
+    content.match(/(\*|_)[\s\S]*?(\*|_)/g)?.forEach((str) => {
+        content = content.replace(
+            str,
+            `<span class="italic">${str.slice(1, -1)}</span>`
         );
     });
     // リンク

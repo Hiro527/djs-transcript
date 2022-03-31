@@ -96,20 +96,24 @@ export const Base = `<!DOCTYPE html>
             .embedContent {
                 display: flex;
                 margin: 15px;
+                justify-content: space-between;
+            }
+            .embedContentMain {
+                min-width: 470px;
             }
             .embedAuthor {
                 display: flex;
                 align-items: center;
+                margin-bottom: 10px
             }
             .embedAuthorAvatar {
                 width: 25px;
                 border-radius: 50%;
+                margin-right: 10px;
             }
             .embedAuthorName {
                 font-size: 14px;
-                margin-left: 10px;
                 font-weight: bold;
-                margin-bottom: 10px
             }
             .embedTitle {
                 font-size: 16px;
@@ -154,6 +158,7 @@ export const Base = `<!DOCTYPE html>
             .embedThumbnail {
                 max-height: 80px;
                 max-width: 140px;
+                margin-left: 10px
             }
             .spoiler {
                 background-color: #5f5f5f;
@@ -199,7 +204,8 @@ export const Base = `<!DOCTYPE html>
                 background-color: #111314;
                 border: rgba(0, 0, 0, 0.4) solid 1px;
                 border-radius: 5px;
-                width: 600px;
+                max-width: 620px;
+                min-width: 480px;
                 font-family: monospace;
             }
             .codeLe {
@@ -270,8 +276,8 @@ export const EmbedBase = `<div class="embed" style="border-left: %EMBED_COLOR% s
 </div>
 `;
 export const EmbedAuthor = `<div class="embedAuthor">
-    <img class="embedAuthorAvatar" src="%EMBED_AUTHOR_AVATAR_URL%">
-    <div class="embedAuthorName">%EMBED_AUTHOR_NAME%</div>
+    %EMBED_AUTHOR_AVATAR%
+    %EMBED_AUTHOR_NAME%
 </div>
 `;
 export const EmbedTitle = `<div class="embedTitle">

@@ -16,10 +16,21 @@ export const transcript = async (
     fpath: string,
     locale?: string
 ) => {
-    if (!(channel instanceof TextChannel || channel instanceof NewsChannel)) {
-        return;
+    if (
+        !(channel instanceof TextChannel || channel instanceof NewsChannel) ||
+        !channel
+    ) {
+        if (!channel) {
+            throw Error(`Channel is ${channel}`);
+        } else {
+            throw TypeError(
+                `This type of channel is not supported. The channel must be TextChannel or NewsChannel.`
+            );
+        }
     }
-    const lastMessage = Array.from(await channel.messages.fetch({ limit: 1 }))[0];
+    const lastMessage = Array.from(
+        await channel.messages.fetch({ limit: 1 })
+    )[0];
     if (!lastMessage[0]) {
         throw Error(`The channel you specified has no messages to transcript.`);
     }
@@ -38,9 +49,7 @@ export const transcript = async (
         }
         return recursive(messages[0].id, messages);
     };
-    const messages = await recursive(lastMessage[0], [
-        lastMessage[1],
-    ]);
+    const messages = await recursive(lastMessage[0], [lastMessage[1]]);
     const html = await getHtml(messages!, channel, channel.guild, locale);
     await fs.writeFile(fname, html);
     return fname;
