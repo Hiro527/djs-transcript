@@ -8,6 +8,7 @@ export const Base = `<!DOCTYPE html>
                 background-color: #2C2F33;
                 color: #FFFFFF;
                 padding-top: 80px;
+                font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
             }
             header {
                 left: 0px;
