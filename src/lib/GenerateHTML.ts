@@ -44,7 +44,7 @@ export const getHtml = async (
         }
         MessageHTML = MessageHTML.replace(
             "%MESSAGE_CONTENT%",
-            generateContentHTML(guild, message.content, locale, false)
+            generateContentHTML(guild, message.content, false)
         );
         let Files = "";
         let Images = "";
@@ -90,7 +90,7 @@ export const getHtml = async (
             if (embed.description) {
                 MainContent += consts.EmbedDesc.replace(
                     "%EMBED_DESC%",
-                    generateContentHTML(guild, embed.description, locale, true)
+                    generateContentHTML(guild, embed.description, true)
                 );
             }
             let RegularFields = "";
@@ -101,26 +101,24 @@ export const getHtml = async (
                     if (field.inline) {
                         InlineFields += consts.EmbedInlineField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            generateContentHTML(guild, field.name, locale, true)
+                            generateContentHTML(guild, field.name, true)
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
                             generateContentHTML(
                                 guild,
                                 field.value,
-                                locale,
                                 true
                             )
                         );
                     } else {
                         RegularFields += consts.EmbedRegularField.replace(
                             "%EMBED_FIELD_TITLE%",
-                            generateContentHTML(guild, field.name, locale, true)
+                            generateContentHTML(guild, field.name, true)
                         ).replace(
                             "%EMBED_FIELD_VALUE%",
                             generateContentHTML(
                                 guild,
                                 field.value,
-                                locale,
                                 true
                             )
                         );
@@ -235,7 +233,6 @@ const fileSize = (size: number) => {
 const generateContentHTML = (
     guild: Guild,
     content: string,
-    locale?: string,
     embed?: Boolean
 ) => {
     let codeB: string[] = [];
@@ -454,6 +451,16 @@ const generateContentHTML = (
                 );
             });
     }
+    // カスタム絵文字
+    content.match(/<a?:[\S\s]*?:[0-9]{10,20}>/)?.forEach((str) => {
+        const isAnimated = str.match(/(?<=<)a(?=:[\S\s]*?:[0-9]{10,20}>)/g);
+        const emojiId = str.match(/(?<=<a?:[\S\s]*?:)[0-9]{10,20}(?=>)/g)![0];
+        const emojiUrl = `https://cdn.discordapp.com/emojis/${emojiId}.${isAnimated ? 'gif' : 'png'}`;
+        content = str.replace(
+            str,
+            `<img class="emoji" src="${emojiUrl}">`
+        );
+    })
     // コードブロック復元処理
     index = 0;
     codeB.forEach((str) => {

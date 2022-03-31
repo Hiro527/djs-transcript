@@ -235,6 +235,9 @@ export const Base = `<!DOCTYPE html>
             a:hover {
                 text-decoration: underline;
             }
+            .emoji {
+                max-height: 20px
+            }
         </style>
     </head>
     <body>
@@ -268,7 +271,7 @@ export const Message = `<div class="message">
     </div>
 </div>`;
 export const Image = `<img class="attachmentImage" src="%IMAGE_URL%">`;
-export const Video = `<video controls width="600" style="display:block"><source src="%VIDEO_URL%" type="video/%VIDEO_TYPE%"></video>`
+export const Video = `<video controls width="600" style="display:block"><source src="%VIDEO_URL%" type="video/%VIDEO_TYPE%"></video>`;
 export const File = `<div class="attachmentFile">
     <div class="fileName">%FILE_NAME%</div>
     <div class="fileSize">%FILE_SIZE%</div>
@@ -322,5 +325,5 @@ export const EmbedFooter = `<div class="embedFooter">
     %EMBED_FOOTER_IMAGE%
     <div class="embedFooterText">%EMBED_FOOTER_TEXT%%EMBED_FOOTER_TIMESTAMP%</div>
 </div>`;
-export const EmbedFooterImage = `<img class="embedFooterImage" src="%EMBED_FOOTER_IMAGE_URL%">`
+export const EmbedFooterImage = `<img class="embedFooterImage" src="%EMBED_FOOTER_IMAGE_URL%">`;
 export const EmbedThumbnail = `<img class="embedThumbnail" src="%EMBED_THUMBNAIL_IMAGE_URL%">`;
