@@ -14,10 +14,6 @@ Sample Page: https://hiro527.jp/djs-transcript/sample.html
 
  このライブラリは現在開発段階です。未知のバグやその他の問題を引き起こす可能性が十分あるため、常にアップデートに気を配っておいてください。可能な限り早急なバグ修正に取り掛かりますが、開発者が学生であるため時間がなかなか取れない場合があることをご了承ください。
 
-# v1.0.0
-- Quote and italic are supported. / 引用と斜体に対応しました。
-- Fixed an issue where both color of code block and embed are same. / Embedとコードブロックで背景色が被っている問題を修正しました。
-
 # Requirements / 必要事項
 - Node.js: >= 16.6.0
 - Discord.js: >= 13.0.0
@@ -72,5 +68,5 @@ client.login('DISCORD_TOKEN');
 # Contact / コンタクト
 You can contact to me in both English and Japanese.\
 連絡の際は日本語と英語のどちらでも大丈夫です。\
-Discord: nullA1m#7777\
-Twitter: [@nullA1m](https://twitter.com/nullA1m)
+Discord: Hiro527#7777\
+Twitter: [@fps_Hiro527](https://twitter.com/fps_Hiro527)
